@@ -1,0 +1,82 @@
+const Service = require('../../core/base_service');
+
+class {{class_name}}Service extends Service {
+
+    async create(entity) {
+        const result = await this.app.mysql.insert('{{table_name}}', entity);
+        const insertSuccess = result.affectedRows === 1;
+        if (insertSuccess){
+            let object = Object.assign({},entity,{id:result.insertId})
+            return object;
+        }
+        return undefined;
+    }
+
+    async update(entity) {
+        const result = await this.app.mysql.update('{{table_name}}', entity);
+        const updateSuccess = result.affectedRows === 1;
+        if (updateSuccess){
+            return entity;
+        }
+        return undefined;
+    }
+
+    async delete(id) {
+        const result = await this.app.mysql.delete('{{table_name}}', {id});
+        const deleteSuccess = result.affectedRows === 1;
+        return deleteSuccess;
+    }
+
+    async detail(id) {
+        const result = await this.app.mysql.get('{{table_name}}',{id});
+        return result;
+    }
+
+    async list(page,size,shopId,appletId) {
+
+        let where = {};
+
+        if (shopId != undefined){
+            where.shopId = shopId;
+        }
+
+        if (appletId != undefined){
+            where.appletId = appletId;
+        }
+
+        let options = { 
+            where: where, 
+            orders: [['createAt','desc']], // 排序方式
+        }
+
+        if (page != undefined){
+            let offset = (page - 1) * size;
+            options.limit = size
+            options.offset = offset
+        }
+
+        const results = await this.app.mysql.select('{{table_name}}', options);
+     
+        return results;
+    }
+
+    async count(shopId,appletId) {
+
+        let sql = `select count(1) as count from {{table_name}} where 1 = 1`
+
+        if (shopId != undefined){
+            sql = sql + ` and shopId = ${shopId}`
+        }
+
+        if (appletId != undefined){
+            sql = sql + ` and appletId = ${appletId}`
+        }
+
+        const results = await this.app.mysql.query(sql);
+     
+        return results[0].count;
+    }
+
+}
+
+module.exports = {{class_name}}Service;
