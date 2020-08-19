@@ -1,0 +1,1 @@
+export { useMyAction } from './myAction';
