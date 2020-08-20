@@ -1,6 +1,6 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const Controller = require('../../core/base_controller');
 const fs = require('fs')
 
 class FrontController extends Controller {
@@ -11,6 +11,7 @@ class FrontController extends Controller {
         table:"cc_user",
         class_name:"User",
         package: "com.lmm",
+        isCopyToApp: "",
     }
 
     const templ = await ctx.renderView('generate/node/node_controller_templates.nj', params);
@@ -23,7 +24,7 @@ class FrontController extends Controller {
 
 
     fs.writeFile(__distFilePath + '/message.js', templ , 'utf8', () => {});
-    ctx.body = "执行成功"
+    this.success("执行成功");
   }
 
   async generateFile(tempString,dir){

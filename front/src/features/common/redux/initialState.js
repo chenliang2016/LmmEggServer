@@ -46,6 +46,12 @@ const initialState = {
         route: '/demo/shop/add',
         show:false,
       },
+      {
+        id: '5',
+        icon: 'shop',
+        name: '代码生成器',
+        route: '/generate',
+      },
     ],
 };
 

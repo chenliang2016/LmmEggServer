@@ -9,5 +9,17 @@ module.exports = {
   nunjucks : {
     enable: true,
     package: 'egg-view-nunjucks',
+  },
+  mysql : {
+    enable: true,
+    package: 'egg-mysql',
+  },
+  jwt : {
+    enable: true,
+    package: 'egg-jwt',
+  },
+  schedule : {
+    enable: true,
+    package: 'egg-schedule'
   }
 };

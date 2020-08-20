@@ -2,7 +2,7 @@
 
 module.exports = app => {
   const { router, controller } = app;
-  router.get('/api/generate/java', controller.generate.java);
-  router.get('/api/generate/node', controller.generate.node.index);
-  router.get('/api/generate/front', controller.generate.front.index);
+  router.post('/api/generate/java', controller.generate.java);
+  router.post('/api/generate/node', controller.generate.node.index);
+  router.post('/api/generate/front', controller.generate.front.index);
 };

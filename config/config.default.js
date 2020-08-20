@@ -19,6 +19,12 @@ module.exports = appInfo => {
     }
   };
 
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  }
+
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1597806524891_7869';
 
