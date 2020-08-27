@@ -1,0 +1,183 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from './redux/actions';
+
+import { Input } from 'antd'
+
+import { Page,Crud } from '../../components'
+
+const {CrudTable,CrudForm,CrudFilter} = Crud
+
+export class {{modalCapitalize}}Page extends Component {
+  static propTypes = {
+    {{feature}}: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
+  };
+
+  componentDidMount(){
+     const { {{modal}}Page,current{{modalCapitalize}}} = this.props.{{feature}};
+     this.fetchList( {{modal}}Page);
+  }
+
+  fetchList = (page,name) => {
+    const {get{{modalCapitalize}}List} = this.props.actions;
+    get{{modalCapitalize}}List(page);
+  }
+
+  getDataSource() {
+    const { {{feature}} } = this.props;
+    const { {{modal}}ById, {{modal}}List } = {{feature}};
+    if (!{{modal}}List) return [];
+    return {{modal}}List.map(id => {{modal}}ById[id]);
+  }
+
+  get listProps() {
+    const { {{feature}},actions } = this.props
+    const { get{{modalCapitalize}}ListPending,{{modal}}Total,{{modal}}Page } = {{feature}}
+    const { delete{{modalCapitalize}},chooseCurrent{{modalCapitalize}},{{modal}}ModalChange } = actions;
+
+    return {
+      dataSource: this.getDataSource(),
+      loading: get{{modalCapitalize}}ListPending,
+      columns:[
+        {
+          title: "开放平台应用",
+          dataIndex: 'shopName',
+          key: 'shopName',
+          width: 180,
+        },
+      ],
+      pagination:{
+        total:{{modal}}Total,
+        current:{{modal}}Page,
+        onChange : (page) => {
+          this.fetchList(page);
+        }
+      },
+      op:[
+        {
+          key:1,
+          name:'编辑'
+        },
+        {
+          key:3,
+          name:'删除',
+          needConfirm:true,
+          confirmTitle:"确认删除"
+        }
+      ],
+      handleMenuClick: (record,item) => {
+        if (item.key == 1){
+          chooseCurrent{{modalCapitalize}}(record);
+          {{modal}}ModalChange(true,"updata");
+        }else if(item.key == 3){
+            delete{{modalCapitalize}}(record.id).then((data) => {
+            this.fetchList({{modal}}Page);
+          })
+        }
+      }
+    }
+  } 
+
+  get modalProps() {
+    const { {{feature}},actions } = this.props
+    const { current{{modalCapitalize}}, {{modal}}ModalVisible,{{modal}}Page, {{modal}}ModalType,submit{{modalCapitalize}}Pending } = {{feature}}
+
+    const { {{modal}}ModalChange,submit{{modalCapitalize}} } = actions;
+    const editItem  = {{modal}}ModalType === 'create' ? {} : current{{modalCapitalize}}
+    return {
+      item: {{modal}}ModalType === 'create' ? {} : current{{modalCapitalize}},
+      visible: {{modal}}ModalVisible,
+      destroyOnClose: true,
+      maskClosable: false,
+      confirmLoading: submit{{modalCapitalize}}Pending,
+      title: `${
+        {{modal}}ModalType === 'create' ? `创建` : `更新`
+      }`,
+      centered: true,
+      elements: [
+        {
+          key: "shopName",
+          label: "商户名",
+          // initialValue: editItem.shopName,
+          widget: Input,
+          required: true
+        },
+        {
+          key: "score",
+          label: "score",
+          // initialValue: editItem.score,
+          widget: Input,
+          required: true
+        },
+        {
+          key: "subAppid",
+          label: "商户公众号id",
+          // initialValue: editItem.subAppid,
+          widget: Input,
+          required: true
+        },
+      ],
+      onOk: data => {
+        submit{{modalCapitalize}}(Object.assign({},data,{})).then(data=> {
+          {{modal}}ModalChange(false,"create");
+          this.fetchList({{modal}}Page);
+        })
+      },
+      onCancel() {
+        {{modal}}ModalChange(false,"create");
+      },
+    }
+  }
+
+  get filterProps() {
+    const { location,actions,{{feature}} } = this.props
+    const { query } = location
+    const { current{{modalCapitalize}},{{modal}}Page} = {{feature}}
+    const { {{modal}}ModalChange } = actions;
+
+    return {
+      filter: {
+        ...query,
+      },
+      title:"",
+      onFilterChange: value => {
+         this.fetchList({{modal}}Page,value.name)
+      },
+      onAdd() {
+        {{modal}}ModalChange(true,'create')
+      },
+    }
+  }
+
+  render() {
+    return (
+      <Page inner>
+        <CrudFilter {...this.filterProps} />
+        <CrudTable {...this.listProps} />
+        <CrudForm {...this.modalProps} />
+      </Page>
+    );
+  }
+}
+
+/* istanbul ignore next */
+function mapStateToProps(state) {
+  return {
+    {{feature}}: state.{{feature}},
+  };
+}
+
+/* istanbul ignore next */
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ ...actions }, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)({{modalCapitalize}}Page);

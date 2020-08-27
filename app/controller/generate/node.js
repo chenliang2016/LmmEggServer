@@ -1,17 +1,25 @@
 'use strict';
 const Controller = require('../../core/base_controller');
 const fs = require('fs');
-const { resolve } = require('path');
+const {toZip} = require('../../utils/fileZip')
 
 class NodeController extends Controller {
   async index() {
     const {ctx} = this;
     const params = ctx.request.body;
+    const class_name = params.class_name;
+    const packageString = params.package
 
     await this.generateController(ctx,params);
     await this.generateService(ctx,params);
  
-    this.success("执行成功");
+    let __distFilePath = __dirname.replace("/controller/generate","") + "/public/generate" ;
+    let packagePath = packageString.replace('.',"/");
+    __distFilePath = __distFilePath + "/" + packagePath + "/";
+
+    let outPutFile = __dirname.replace("/controller/generate","") + "/public/" + class_name + ".zip" ;
+    toZip(__distFilePath,outPutFile)
+    this.success("http://" + ctx.host + "/public/" + class_name + '.zip');
   }
 
  

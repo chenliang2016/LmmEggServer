@@ -8,6 +8,9 @@
 const initialState = {
   submitNodePending: false,
   submitNodeError: null,
+  submitFrontPending: false,
+  submitFrontError: null,
+  downloadUrl:'',
 };
 
 export default initialState;

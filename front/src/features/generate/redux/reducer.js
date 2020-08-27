@@ -8,9 +8,11 @@
 
 import initialState from './initialState';
 import { reducer as submitNodeReducer } from './submitNode';
+import { reducer as submitFrontReducer } from './submitFront';
 
 const reducers = [
   submitNodeReducer,
+  submitFrontReducer,
 ];
 
 export default function reducer(state = initialState, action) {

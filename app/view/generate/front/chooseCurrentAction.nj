@@ -1,0 +1,23 @@
+import {
+    {{feature}}_CHOOSE_CURRENT_{{modalUpcase}},
+} from './constants';
+  
+export function chooseCurrent{{modalCapitalize}}(modal) {
+    return {
+      type: {{feature}}_CHOOSE_CURRENT_{{modalUpcase}},
+      data: modal,
+    };
+}
+  
+export function reducer(state, action) {
+    switch (action.type) {
+      case {{feature}}_CHOOSE_CURRENT_{{modalUpcase}}:
+        return {
+          ...state,
+          current{{modalCapitalize}}:action.data,
+        };
+  
+      default:
+        return state;
+    }
+}

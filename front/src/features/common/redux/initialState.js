@@ -11,42 +11,6 @@ const initialState = {
   loading:false,
   routeList : [
       {
-        id: '1',
-        icon: 'laptop',
-        name: '首页',
-        route: '/admin',
-      },
-      {
-        id: '11',
-        icon: 'laptop',
-        name: '添加列表',
-        route: '/system/addList',
-      },
-      {
-        id: '2',
-        breadcrumbParentId: '1',
-        icon: 'shop',
-        name: '店铺管理',
-        route: '/',
-      },
-      {
-        id: '3',
-        menuParentId: '2',
-        breadcrumbParentId: '1',
-        icon: 'shop',
-        name: '店铺列表',
-        route: '/demo/shop',
-      },
-      {
-        id: '4',
-        menuParentId: '2',
-        breadcrumbParentId: '3',
-        icon: 'shop',
-        name: '店铺新增',
-        route: '/demo/shop/add',
-        show:false,
-      },
-      {
         id: '5',
         icon: 'shop',
         name: '代码生成器',

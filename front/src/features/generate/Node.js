@@ -50,14 +50,14 @@ class Node extends Component {
           )}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator('remember', {
-            valuePropName: 'checked',
-            initialValue: true,
-          })(<Checkbox>Remember me</Checkbox>)}
           <Button type="primary" htmlType="submit" className="login-form-button">
             生成
           </Button>
         </Form.Item>
+        {this.props.downloadUrl != "" ? 
+        <a href={this.props.downloadUrl}  >下载</a>
+          :null        
+        }
       </Form>
       </div>
     );

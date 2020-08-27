@@ -1,0 +1,14 @@
+export const {{feature}}_GET_{{modalUpcase}}_LIST_BEGIN = '{{feature}}_GET_{{modalUpcase}}_LIST_BEGIN';
+export const {{feature}}_GET_{{modalUpcase}}_LIST_SUCCESS = '{{feature}}_GET_{{modalUpcase}}_LIST_SUCCESS';
+export const {{feature}}_GET_{{modalUpcase}}_LIST_FAILURE = '{{feature}}_GET_{{modalUpcase}}_LIST_FAILURE';
+export const {{feature}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR = '{{feature}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR';
+export const {{feature}}_SUBMIT_{{modalUpcase}}_BEGIN = '{{feature}}_SUBMIT_{{modalUpcase}}_BEGIN';
+export const {{feature}}_SUBMIT_{{modalUpcase}}_SUCCESS = '{{feature}}_SUBMIT_{{modalUpcase}}_SUCCESS';
+export const {{feature}}_SUBMIT_{{modalUpcase}}_FAILURE = '{{feature}}_SUBMIT_{{modalUpcase}}_FAILURE';
+export const {{feature}}_SUBMIT_{{modalUpcase}}_DISMISS_ERROR = '{{feature}}_SUBMIT_{{modalUpcase}}_DISMISS_ERROR';
+export const {{feature}}_DELETE_{{modalUpcase}}_BEGIN = '{{feature}}_DELETE_{{modalUpcase}}_BEGIN';
+export const {{feature}}_DELETE_{{modalUpcase}}_SUCCESS = '{{feature}}_DELETE_{{modalUpcase}}_SUCCESS';
+export const {{feature}}_DELETE_{{modalUpcase}}_FAILURE = '{{feature}}_DELETE_{{modalUpcase}}_FAILURE';
+export const {{feature}}_DELETE_{{modalUpcase}}_DISMISS_ERROR = '{{feature}}_DELETE_{{modalUpcase}}_DISMISS_ERROR';
+export const {{feature}}_{{modalUpcase}}_MODAL_CHANGE = '{{feature}}_{{modalUpcase}}_MODAL_CHANGE';
+export const {{feature}}_CHOOSE_CURRENT_{{modalUpcase}} = '{{feature}}_CHOOSE_CURRENT_{{modalUpcase}}';

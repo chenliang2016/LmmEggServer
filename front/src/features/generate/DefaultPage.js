@@ -6,6 +6,10 @@ import * as actions from './redux/actions';
 import {Page} from '../../components'
 
 import Node from './Node'
+import Front from './Front'
+import { Tabs } from 'antd';
+
+const { TabPane } = Tabs;
 
 export class DefaultPage extends Component {
   static propTypes = {
@@ -14,9 +18,11 @@ export class DefaultPage extends Component {
   };
 
   get nodeProps(){
-    const {actions} = this.props;
+    const {actions,generate} = this.props;
     const {submitNode} = actions;
+    const { downloadUrl }= generate
     return {
+      downloadUrl:downloadUrl,
       submitNode:(values) => {
         console.log("提交的数据");
         console.log(values);
@@ -25,10 +31,33 @@ export class DefaultPage extends Component {
     }
   }
 
+  get frontProps(){
+    const {actions,generate} = this.props;
+    const {submitFront} = actions;
+    const { downloadUrl }= generate
+    return {
+      downloadUrl:downloadUrl,
+      submitFront:(values) => {
+        console.log("提交的数据");
+        console.log(values);
+        submitFront(values)
+      }
+    }
+  }
+
   render() {
     return (
       <Page className="generate-default-page" inner>
-        <Node {...this.nodeProps} />
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="NODE后端" key="1">
+           <Node {...this.nodeProps} />
+          </TabPane>
+          <TabPane tab="REACT前端" key="2">
+             <Front {...this.frontProps} />
+          </TabPane>
+          <TabPane tab="JAVA" key="3">
+          </TabPane>
+        </Tabs>
       </Page>
     );
   }
