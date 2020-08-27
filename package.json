@@ -30,6 +30,7 @@
   },
   "scripts": {
     "start": "egg-scripts start --daemon --title=egg-server-Lmm",
+    "startDocker": "egg-scripts start --title=egg-server-Lmm",
     "stop": "egg-scripts stop --title=egg-server-Lmm",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",

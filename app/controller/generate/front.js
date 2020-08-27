@@ -13,18 +13,24 @@ class FrontController extends Controller {
   async index() {
     const { ctx } = this;
     let data = ctx.request.body;
+
+    const modal = data.modal;
+    const packageString = data.package
+
     await this.generateActions(data)
     await this.generateConstants(data)
     await this.generateCRUDActions(data)
     await this.generateInitStates(data)
     await this.generateReducer(data)
-    const distModal =  await this.generatePages(data)
-    const distDir = distModal.distDir
-    const randomFilePackage = distModal.randomFilePackage
-    console.log(distDir)
-    let outPutFile = __dirname.replace("/controller/generate","") + "/public/" + randomFilePackage + ".zip" ;
-    toZip(distDir,outPutFile)
-    this.success("http://" + ctx.host + "/public/" + randomFilePackage + '.zip');
+    await this.generatePages(data)
+    
+    let __distFilePath = __dirname.replace("/controller/generate","") + "/public/generate" ;
+    let packagePath = packageString.replace('.',"/");
+    __distFilePath = __distFilePath + "/" + packagePath + "/";
+
+    let outPutFile = __dirname.replace("/controller/generate","") + "/public/" + modal + ".zip" ;
+    toZip(__distFilePath,outPutFile)
+    this.success("http://" + ctx.host + "/public/" + modal + '.zip');
   }
 
   async generateActions(params){
@@ -141,16 +147,19 @@ class FrontController extends Controller {
     const {ctx} = this;
     const templ = await ctx.renderView(tmplUrl, params);
     let __distFilePath = __dirname.replace("/controller/generate","") + "/public/generate" ;
-    let randomFilePackage = moment().format("YYYYMMDDHHmmss")
-    __distFilePath = __distFilePath + "/" + packagePath + "/" + randomFilePackage + "/" ;
+    __distFilePath = __distFilePath + "/" + packagePath + "/" ;
     if (subDir){
       __distFilePath = __distFilePath + subDir
     }
     if (!fs.existsSync(__distFilePath)) {
       fs.mkdirSync(__distFilePath, { recursive: true });
     }
+
+    console.log("前端地址")
+    console.log(__distFilePath)
+
     fs.writeFile(__distFilePath + fileName, templ , 'utf8', () => {});
-    return {distDir:__distFilePath,randomFilePackage};
+    return {distDir:__distFilePath};
   }
 }
 
