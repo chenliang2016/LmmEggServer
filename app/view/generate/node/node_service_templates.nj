@@ -3,7 +3,7 @@ const Service = require('../../core/base_service');
 class {{class_name}}Service extends Service {
 
     async create(entity) {
-        const result = await this.app.mysql.insert('{{table_name}}', entity);
+        const result = await this.app.mysql.insert('{{table}}', entity);
         const insertSuccess = result.affectedRows === 1;
         if (insertSuccess){
             let object = Object.assign({},entity,{id:result.insertId})
@@ -13,7 +13,7 @@ class {{class_name}}Service extends Service {
     }
 
     async update(entity) {
-        const result = await this.app.mysql.update('{{table_name}}', entity);
+        const result = await this.app.mysql.update('{{table}}', entity);
         const updateSuccess = result.affectedRows === 1;
         if (updateSuccess){
             return entity;
@@ -22,13 +22,13 @@ class {{class_name}}Service extends Service {
     }
 
     async delete(id) {
-        const result = await this.app.mysql.delete('{{table_name}}', {id});
+        const result = await this.app.mysql.delete('{{table}}', {id});
         const deleteSuccess = result.affectedRows === 1;
         return deleteSuccess;
     }
 
     async detail(id) {
-        const result = await this.app.mysql.get('{{table_name}}',{id});
+        const result = await this.app.mysql.get('{{table}}',{id});
         return result;
     }
 
@@ -55,14 +55,14 @@ class {{class_name}}Service extends Service {
             options.offset = offset
         }
 
-        const results = await this.app.mysql.select('{{table_name}}', options);
+        const results = await this.app.mysql.select('{{table}}', options);
      
         return results;
     }
 
     async count(shopId,appletId) {
 
-        let sql = `select count(1) as count from {{table_name}} where 1 = 1`
+        let sql = `select count(1) as count from {{table}} where 1 = 1`
 
         if (shopId != undefined){
             sql = sql + ` and shopId = ${shopId}`
