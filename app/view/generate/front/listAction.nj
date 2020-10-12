@@ -1,8 +1,8 @@
 import {
-    {{featureUpcase}}_GET_{{modalUpcase}}_LIST_BEGIN,
-    {{featureUpcase}}_GET_{{modalUpcase}}_LIST_SUCCESS,
-    {{featureUpcase}}_GET_{{modalUpcase}}_LIST_FAILURE,
-    {{featureUpcase}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR,
+    {{feature}}_GET_{{modalUpcase}}_LIST_BEGIN,
+    {{feature}}_GET_{{modalUpcase}}_LIST_SUCCESS,
+    {{feature}}_GET_{{modalUpcase}}_LIST_FAILURE,
+    {{feature}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR,
   } from './constants';
   
   import request from '../../../utils/request'
@@ -11,22 +11,22 @@ import {
   export function get{{modalCapitalize}}List(page) {
     return (dispatch) => { // optionally you can have getState as the second argument
       dispatch({
-        type: {{featureUpcase}}_GET_{{modalUpcase}}_LIST_BEGIN,
+        type: {{feature}}_GET_{{modalUpcase}}_LIST_BEGIN,
       });
   
      const promise = new Promise((resolve, reject) => {
           request({
             method:'get',
-            url:{{listUrl}},
+            url:'{{listUrl}}',
           }).then( data => {
               dispatch({
-                  type: {{featureUpcase}}_GET_{{modalUpcase}}_LIST_SUCCESS,
+                  type: {{feature}}_GET_{{modalUpcase}}_LIST_SUCCESS,
                   data: data,
               });
               resolve(data);
           }).catch (error => {
               dispatch({
-                type: {{featureUpcase}}_GET_{{modalUpcase}}_LIST_FAILURE,
+                type: {{feature}}_GET_{{modalUpcase}}_LIST_FAILURE,
                 data: { error: error },
               });
               reject(error);
@@ -41,13 +41,13 @@ import {
   // If you don't want errors to be saved in Redux store, just ignore this method.
   export function dismissGet{{modalCapitalize}}ListError() {
     return {
-      type: {{featureUpcase}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR,
+      type: {{feature}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR,
     };
   }
   
   export function reducer(state, action) {
     switch (action.type) {
-      case {{featureUpcase}}_GET_{{modalUpcase}}_LIST_BEGIN:
+      case {{feature}}_GET_{{modalUpcase}}_LIST_BEGIN:
         // Just after a request is sent
         return {
           ...state,
@@ -55,7 +55,7 @@ import {
           get{{modalCapitalize}}ListError: null,
         };
   
-      case {{featureUpcase}}_GET_{{modalUpcase}}_LIST_SUCCESS:
+      case {{feature}}_GET_{{modalUpcase}}_LIST_SUCCESS:
         // The request is success
   
         const byId = {};
@@ -75,7 +75,7 @@ import {
           get{{modalCapitalize}}ListError: null,
         };
   
-      case {{featureUpcase}}_GET_{{modalUpcase}}_LIST_FAILURE:
+      case {{feature}}_GET_{{modalUpcase}}_LIST_FAILURE:
         // The request is failed
         return {
           ...state,
@@ -83,7 +83,7 @@ import {
           get{{modalCapitalize}}ListError: action.data.error,
         };
   
-      case {{featureUpcase}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR:
+      case {{feature}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR:
         // Dismiss the request failure error
         return {
           ...state,
