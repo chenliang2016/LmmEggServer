@@ -9,10 +9,12 @@
 import initialState from './initialState';
 import { reducer as loginReducer } from './login';
 import { reducer as changeRoleReducer } from './changeRole';
+import { reducer as changeUserNameReducer } from './changeUserName';
 
 const reducers = [
   loginReducer,
   changeRoleReducer,
+  changeUserNameReducer,
 ];
 
 export default function reducer(state = initialState, action) {

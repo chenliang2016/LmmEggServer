@@ -7,6 +7,7 @@ import demoReducer from '../features/demo/redux/reducer';
 import errorReducer from '../features/error/redux/reducer';
 import systemReducer from '../features/system/redux/reducer';
 import generateReducer from '../features/generate/redux/reducer';
+import adminReducer from '../features/admin/redux/reducer';
 
 // NOTE 1: DO NOT CHANGE the 'reducerMap' name and the declaration pattern.
 // This is used for Rekit cmds to register new features, remove features, etc.
@@ -22,6 +23,7 @@ const reducerMap = {
   error: errorReducer,
   system: systemReducer,
   generate: generateReducer,
+  admin: adminReducer,
 };
 
 export default combineReducers(reducerMap);

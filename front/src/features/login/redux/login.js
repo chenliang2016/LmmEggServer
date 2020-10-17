@@ -9,8 +9,7 @@ import { push } from 'react-router-redux'
 
 import '../../../mock/user'
 import request from '../../../utils/request'
-
-import {changeRole} from './changeRole'
+import { changeUserName } from './changeUserName';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
@@ -26,15 +25,15 @@ export function login(args = {}) {
     // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
 
     request({
-      method:'post',
-      url:'/user/login',
-      // data:{
-      //   user:'guest',
-      //   pawd:'guest'
-      // },
+      method:'get',
+      url:'/v1/sys/user/login',
+      data:args,
     }).then( data => {
-        dispatch(changeRole("admin"));
-        dispatch(push("/admin"));
+        console.log(data);
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("name", data.name);
+        dispatch(push("/order"));
+        dispatch(changeUserName(data.name))
     })
 
     const promise = new Promise((resolve, reject) => {

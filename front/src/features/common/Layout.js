@@ -30,7 +30,7 @@ export class CommonLayout extends Component {
 
   render() {
 
-    const {common,location}  = this.props;
+    const {common,login,location}  = this.props;
     const {collapsed,routeList,loading} = common
 
     const currentPath = location.pathname + location.search
@@ -58,7 +58,7 @@ export class CommonLayout extends Component {
       notifications,
       onCollapseChange:this.onCollapseChange,
       avatar: "",
-      username: "test",
+      username: login.username,
       
       onSignOut() {
       },
@@ -101,6 +101,7 @@ export class CommonLayout extends Component {
 function mapStateToProps(state) {
   return {
     common: state.common,
+    login: state.login,
   };
 }
 

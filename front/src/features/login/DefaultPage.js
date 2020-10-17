@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-
+import md5 from 'md5'
 import { Button, Row, Form, Icon, Input } from 'antd'
 const FormItem = Form.Item
 
@@ -21,7 +21,12 @@ class DefaultPage extends Component {
         return
       }
 
-      this.props.actions.login();
+      let params = {
+        loginId:values.username,
+        password:md5(values.password)
+      }
+
+      this.props.actions.login(params);
 
       // dispatch({ type: 'login/login', payload: values })
     })

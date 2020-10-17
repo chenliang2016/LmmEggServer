@@ -19,6 +19,10 @@ export default function request(options) {
       cancel,
     })
   })
+  
+  if (sessionStorage.getItem("token")) {
+    axios.defaults.headers.common['Authorization'] = "Bearer " + sessionStorage.getItem("token");
+  }
 
   return axios(options)
     .then(response => {
