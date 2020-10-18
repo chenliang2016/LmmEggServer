@@ -20,8 +20,8 @@ import {
       // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
       const promise = new Promise((resolve, reject) => {
           request({
-            method:'delete',
-            url:'/v1/sys/user/delete',
+            method:'post',
+            url:'/api/b/admin/delete',
             data:{id:id}
           }).then( data => {
               dispatch({

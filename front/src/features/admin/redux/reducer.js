@@ -4,6 +4,12 @@ import { reducer as submitAdminReducer } from './submitAdmin';
 import { reducer as deleteAdminReducer } from './deleteAdmin';
 import { reducer as adminModalChangeReducer } from './adminModalChange';
 import { reducer as chooseCurrentAdminReducer } from './chooseCurrentAdmin';
+import { reducer as getDeptListReducer } from './getDeptList';
+import { reducer as submitDeptReducer } from './submitDept';
+import { reducer as deleteDeptReducer } from './deleteDept';
+import { reducer as deptModalChangeReducer } from './deptModalChange';
+import { reducer as chooseCurrentDeptReducer } from './chooseCurrentDept';
+import { reducer as getAllDeptReducer } from './getAllDept';
 
 const reducers = [
   getAdminListReducer,
@@ -11,6 +17,12 @@ const reducers = [
   deleteAdminReducer,
   adminModalChangeReducer,
   chooseCurrentAdminReducer,
+  getDeptListReducer,
+  submitDeptReducer,
+  deleteDeptReducer,
+  deptModalChangeReducer,
+  chooseCurrentDeptReducer,
+  getAllDeptReducer,
 ];
 
 export default function reducer(state = initialState, action) {

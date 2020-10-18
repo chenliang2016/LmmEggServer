@@ -9,10 +9,12 @@
 import initialState from './initialState';
 import { reducer as collapseChangeReducer } from './collapseChange';
 import { reducer as setLoadingReducer } from './setLoading';
+import { reducer as logoutReducer } from './logout';
 
 const reducers = [
   collapseChangeReducer,
   setLoadingReducer,
+  logoutReducer,
 ];
 
 export default function reducer(state = initialState, action) {

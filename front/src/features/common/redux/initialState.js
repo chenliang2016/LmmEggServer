@@ -11,10 +11,30 @@ const initialState = {
   loading:false,
   routeList : [
       {
-        id: '5',
+        id: '4',
         icon: 'shop',
         name: '代码生成器',
         route: '/generate',
+      },
+      {
+        id: '5',
+        icon: 'shop',
+        name: '组织架构',
+        route: '/construction/design',
+      },
+      {
+        id: '51',
+        icon: 'shop',
+        name: '部门管理',
+        menuParentId: "5",
+        route: '/admin/dept',
+      },
+      {
+        id: '52',
+        icon: 'shop',
+        name: '人员管理',
+        menuParentId: "5",
+        route: '/admin',
       },
     ],
 };

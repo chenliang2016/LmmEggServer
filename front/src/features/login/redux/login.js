@@ -25,15 +25,15 @@ export function login(args = {}) {
     // e.g.: handleSubmit() { this.props.actions.submitForm(data).then(()=> {}).catch(() => {}); }
 
     request({
-      method:'get',
-      url:'/v1/sys/user/login',
+      method:'post',
+      url:'/api/b/admin/login',
       data:args,
     }).then( data => {
         console.log(data);
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("name", data.name);
-        dispatch(push("/order"));
-        dispatch(changeUserName(data.name))
+        // sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("name", data.username);
+        dispatch(push("/admin"));
+        dispatch(changeUserName(data.username))
     })
 
     const promise = new Promise((resolve, reject) => {

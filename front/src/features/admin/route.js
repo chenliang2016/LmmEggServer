@@ -3,7 +3,8 @@
 
 import {
   DefaultPage,
-  AdminPage
+  AdminPage,
+  DeptPage,
 } from './';
 
 export default {
@@ -11,5 +12,6 @@ export default {
   name: 'Admin',
   childRoutes: [
     { path: 'default-page', name: 'Default page', component: AdminPage, isIndex: true },
+    { path: 'dept', name: '部门', component: DeptPage, isIndex: true },
   ],
 };

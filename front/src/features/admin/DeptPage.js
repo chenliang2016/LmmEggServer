@@ -3,69 +3,64 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
+
 import { Input,TreeSelect } from 'antd'
-import md5 from 'md5'
+
 import { Page,Crud } from '../../components'
 
 const {CrudTable,CrudForm,CrudFilter} = Crud
 
-export class AdminPage extends Component {
+export class DeptPage extends Component {
   static propTypes = {
     admin: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
   };
 
   componentDidMount(){
-     const { adminPage,currentAdmin} = this.props.admin;
-     const {getAllDept} = this.props.actions;
-     getAllDept().then(data => {
-      this.fetchList( adminPage);
-     })
+     const { deptPage,currentDept} = this.props.admin;
+     console.log("状态");
+     console.log(this.props.admin);
+     this.fetchList( deptPage);
   }
 
   fetchList = (page,name) => {
-    const {getAdminList} = this.props.actions;
-    getAdminList(page);
+    const {getDeptList,getAllDept} = this.props.actions;
+    getDeptList(page);
+    getAllDept()
   }
 
   getDataSource() {
     const { admin } = this.props;
-    const { adminById, adminList } = admin;
-    if (!adminList) return [];
-    return adminList.map(id => adminById[id]);
+    const { deptById, deptList } = admin;
+    if (!deptList) return [];
+    return deptList.map(id => deptById[id]);
   }
 
   get listProps() {
     const { admin,actions } = this.props
-    const { getAdminListPending,adminTotal,adminPage,allDeptById } = admin
-    const { deleteAdmin,chooseCurrentAdmin,adminModalChange } = actions;
+    const { getDeptListPending,deptTotal,deptPage,deptById } = admin
+    const { deleteDept,chooseCurrentDept,deptModalChange } = actions;
 
     return {
       dataSource: this.getDataSource(),
-      loading: getAdminListPending,
+      loading: getDeptListPending,
       columns:[
         {
-          title: "登录名",
-          dataIndex: 'loginId',
-          key: 'loginId',
+          title: "部门名称",
+          dataIndex: 'deptName',
+          key: 'deptName',
           width: 180,
         },
         {
-          title: "账户名",
-          dataIndex: 'username',
-          key: 'username',
-          width: 180,
-        },
-        {
-          title: "部门",
-          dataIndex: 'deptId',
-          key: 'deptId',
+          title: "父部门",
+          dataIndex: 'pid',
+          key: 'pid',
           width: 180,
           render: text => {
             if (text == 1){
               return <span></span>
             }else{
-              let item = allDeptById[text];
+              let item = deptById[text];
               if (item != undefined){
                 return  <span>{item.deptName}</span>
               }
@@ -73,16 +68,10 @@ export class AdminPage extends Component {
            
           },
         },
-        {
-          title: "密码",
-          dataIndex: 'password',
-          key: 'password',
-          width: 180,
-        },
       ],
       pagination:{
-        total:adminTotal,
-        current:adminPage,
+        total:deptTotal,
+        current:deptPage,
         onChange : (page) => {
           this.fetchList(page);
         }
@@ -101,38 +90,43 @@ export class AdminPage extends Component {
       ],
       handleMenuClick: (record,item) => {
         if (item.key == 1){
-          chooseCurrentAdmin(record);
-          adminModalChange(true,"updata");
+          chooseCurrentDept(record);
+          deptModalChange(true,"updata");
         }else if(item.key == 3){
-            deleteAdmin(record.id).then((data) => {
-            this.fetchList(adminPage);
+            deleteDept(record.id).then((data) => {
+            this.fetchList(deptPage);
           })
         }
       }
     }
   } 
 
-  get modalProps() {
-    const { admin,actions } = this.props
-    const { currentAdmin, deptTree,adminModalVisible,adminPage, adminModalType,submitAdminPending } = admin
+  onChange = (value) => {
+     console.log(value);
+  }
 
-    const { adminModalChange,submitAdmin } = actions;
-    const editItem  = adminModalType === 'create' ? {} : currentAdmin
+  get modalProps() {
+  
+    const { admin,actions } = this.props
+    const { currentDept, deptModalVisible,deptPage, deptModalType,submitDeptPending,deptTree } = admin
+
+    const { deptModalChange,submitDept } = actions;
+    const editItem  = deptModalType === 'create' ? {} : currentDept
     return {
-      item: adminModalType === 'create' ? {} : currentAdmin,
-      visible: adminModalVisible,
+      item: deptModalType === 'create' ? {} : currentDept,
+      visible: deptModalVisible,
       destroyOnClose: true,
       maskClosable: false,
-      confirmLoading: submitAdminPending,
+      confirmLoading: submitDeptPending,
       title: `${
-        adminModalType === 'create' ? `创建` : `更新`
+        deptModalType === 'create' ? `创建` : `更新`
       }`,
       centered: true,
       elements: [
         {
-          key: "deptId",
+          key: "pid",
           label: "父部门",
-          initialValue: editItem.deptId,
+          initialValue: editItem.pid,
           widget: TreeSelect,
           widgetProps:{
             treeData:deptTree,
@@ -142,36 +136,21 @@ export class AdminPage extends Component {
           required: false
         },
         {
-          key: "loginId",
-          label: "登录名",
-          initialValue: editItem.loginId,
-          widget: Input,
-          required: true
-        },
-        {
-          key: "username",
-          label: "账户名",
-          initialValue: editItem.username,
-          widget: Input,
-          required: true
-        },
-        {
-          key: "password",
-          label: "密码",
-          // initialValue: editItem.password,
+          key: "deptName",
+          label: "部门名称",
+          initialValue: editItem.deptName,
           widget: Input,
           required: true
         },
       ],
       onOk: data => {
-        let password = md5(data.password);
-        submitAdmin(Object.assign({},data,{password})).then(data=> {
-          adminModalChange(false,"create");
-          this.fetchList(adminPage);
+        submitDept(Object.assign({},data,{})).then(data=> {
+          deptModalChange(false,"create");
+          this.fetchList(deptPage);
         })
       },
       onCancel() {
-        adminModalChange(false,"create");
+        deptModalChange(false,"create");
       },
     }
   }
@@ -179,8 +158,8 @@ export class AdminPage extends Component {
   get filterProps() {
     const { location,actions,admin } = this.props
     const { query } = location
-    const { currentAdmin,adminPage} = admin
-    const { adminModalChange } = actions;
+    const { currentDept,deptPage} = admin
+    const { deptModalChange } = actions;
 
     return {
       filter: {
@@ -188,10 +167,10 @@ export class AdminPage extends Component {
       },
       title:"",
       onFilterChange: value => {
-         this.fetchList(adminPage,value.name)
+         this.fetchList(deptPage,value.name)
       },
       onAdd() {
-        adminModalChange(true,'create')
+        deptModalChange(true,'create')
       },
     }
   }
@@ -224,4 +203,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdminPage);
+)(DeptPage);

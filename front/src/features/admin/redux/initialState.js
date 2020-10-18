@@ -13,6 +13,24 @@ const initialState = {
   submitAdminError: null,
   deleteAdminPending: false,
   deleteAdminError: null,
+  deptList:[],
+  deptPage:1,
+  deptSize:10,
+  deptTotal:0,
+  deptById:{},
+  deptModalType:"create",
+  deptModalVisible:false,
+  currentDept:{},
+  getDeptListPending: false,
+  getDeptListError: null,
+  submitDeptPending: false,
+  submitDeptError: null,
+  deleteDeptPending: false,
+  deleteDeptError: null,
+  getAllDeptPending: false,
+  getAllDeptError: null,
+  deptTree:[],
+  allDeptById:{}
 };
 
 export default initialState;
