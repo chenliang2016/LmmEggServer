@@ -32,7 +32,7 @@ class {{class_name}}Service extends Service {
         return result;
     }
 
-    async list(page,size,shopId,appletId) {
+    {# async list(page,size,shopId,appletId) {
 
         let where = {};
 
@@ -57,6 +57,28 @@ class {{class_name}}Service extends Service {
 
         const results = await this.app.mysql.select('{{table}}', options);
      
+        return results;
+    } #}
+
+    async list(page,size,username,deptId) {
+
+        let sql = `select *  from {{table}} where 1 = 1`
+
+        if (username != undefined){
+            sql = sql + ` and username like '%${username}%'`
+        }
+
+        if (deptId != undefined){
+            sql = sql + ` and deptId = ${deptId}`
+        }
+
+        sql = sql + ` order by createAt desc`
+
+        if (page != undefined){
+            let offset = (page - 1) * size;
+            sql = sql + ` limit ${offset},${size}`
+        }
+        const results = await this.app.mysql.query(sql);
         return results;
     }
 

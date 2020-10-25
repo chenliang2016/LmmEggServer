@@ -11,9 +11,11 @@ class AdminController extends Controller {
         console.log(data);
         const page = parseInt(data.page);
         const size = parseInt(data.size);
+        const username = data.username;
+        const deptId = data.deptId;
       
-        let list = await ctx.service.admin.admin.list(page, size);
-        let count = await ctx.service.admin.admin.count();
+        let list = await ctx.service.admin.admin.list(page, size,username,deptId);
+        let count = await ctx.service.admin.admin.count(username,deptId);
         this.success({list,count});
     }
 

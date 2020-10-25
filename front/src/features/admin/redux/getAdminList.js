@@ -8,16 +8,13 @@ import {
   import request from '../../../utils/request'
   // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
   // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-  export function getAdminList(page) {
+  export function getAdminList(params) {
     return (dispatch) => { // optionally you can have getState as the second argument
       dispatch({
         type: ADMIN_GET_ADMIN_LIST_BEGIN,
       });
 
-      let params = {
-        page:page,
-        size:10
-      }
+      params.size = 10;
   
      const promise = new Promise((resolve, reject) => {
           request({
@@ -27,7 +24,7 @@ import {
           }).then( data => {
               dispatch({
                   type: ADMIN_GET_ADMIN_LIST_SUCCESS,
-                  data: Object.assign({},data,{page}),
+                  data: Object.assign({},data,{page:params.page}),
               });
               resolve(data);
           }).catch (error => {

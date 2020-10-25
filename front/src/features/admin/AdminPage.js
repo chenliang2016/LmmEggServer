@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Input,TreeSelect } from 'antd'
+import { Input,TreeSelect,Row,Col,Tree } from 'antd'
 import md5 from 'md5'
 import { Page,Crud } from '../../components'
 
-const {CrudTable,CrudForm,CrudFilter} = Crud
+const {CrudTable,CrudForm,CrudFilter,CrudButtons} = Crud
+const { Search } = Input
 
 export class AdminPage extends Component {
   static propTypes = {
@@ -23,9 +24,10 @@ export class AdminPage extends Component {
      })
   }
 
-  fetchList = (page,name) => {
+  fetchList = (page,values) => {
     const {getAdminList} = this.props.actions;
-    getAdminList(page);
+    let params = Object.assign({},{page:page},values)
+    getAdminList(params);
   }
 
   getDataSource() {
@@ -90,11 +92,20 @@ export class AdminPage extends Component {
       op:[
         {
           key:1,
-          name:'编辑'
+          name:'编辑',
+        //   color:"#ffffff",
+          buttonProps:{
+            icon:"edit",
+            type:"primary"
+          },
         },
         {
           key:3,
           name:'删除',
+          buttonProps:{
+            icon:"delete",
+            type:"danger"
+          },
           needConfirm:true,
           confirmTitle:"确认删除"
         }
@@ -183,25 +194,75 @@ export class AdminPage extends Component {
     const { adminModalChange } = actions;
 
     return {
-      filter: {
-        ...query,
-      },
-      title:"",
-      onFilterChange: value => {
-         this.fetchList(adminPage,value.name)
-      },
-      onAdd() {
-        adminModalChange(true,'create')
-      },
+        filter: {
+            ...query,
+        },
+        searchElements: [
+            {
+                key: "username",
+                widget: Input,
+                widgetProps:{
+                    placeholder:"请输入账户名"
+                },
+            },
+        ],
+    //   title:"",
+        onFilterChange: value => {
+            this.fetchList(adminPage,value)
+        },
+        onAdd() {
+            adminModalChange(true,'create')
+        },
     }
   }
 
+  get buttonProps() {
+    const { location,actions,admin } = this.props
+    const { query } = location
+    const { currentAdmin,adminPage} = admin
+    const { adminModalChange } = actions;
+    return {
+        buttons:[
+            {
+                name:"新增",
+                buttonProps:{
+                    type:"primary",
+                    icon:"plus",
+                },
+                onClick:()=>{adminModalChange(true,'create')}
+            }
+        ]
+    }
+  }
+
+  onSelect = (selectedKeys) => {
+    this.fetchList(1,{deptId:selectedKeys[0]})
+  }
+
   render() {
+    const {admin} = this.props
+    const { currentAdmin, deptTree,adminModalVisible,adminPage, adminModalType,submitAdminPending } = admin
     return (
       <Page inner>
-        <CrudFilter {...this.filterProps} />
-        <CrudTable {...this.listProps} />
-        <CrudForm {...this.modalProps} />
+        <Row>
+            <Col span={4}>
+            <div style={{marginTop:6,paddingRight:10,borderWidth:1,borderColor:"#eee"}}>
+                <div style={{fontSize:20}}>部门选择</div>
+                <Tree
+                    style={{paddingRight:30}}
+                    treeData={deptTree}
+                    onSelect={this.onSelect}
+                >
+                </Tree>
+            </div>
+            </Col>
+            <Col span={20} >
+            <CrudFilter {...this.filterProps} />
+            <CrudButtons {...this.buttonProps} />
+            <CrudTable {...this.listProps} />
+            <CrudForm {...this.modalProps} />
+            </Col>
+        </Row>
       </Page>
     );
   }

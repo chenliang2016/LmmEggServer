@@ -8,7 +8,7 @@ import { Input } from 'antd'
 
 import { Page,Crud } from '../../components'
 
-const {CrudTable,CrudForm,CrudFilter} = Crud
+const {CrudTable,CrudForm,CrudFilter,CrudButtons} = Crud
 
 export class {{modalCapitalize}}Page extends Component {
   static propTypes = {
@@ -21,7 +21,7 @@ export class {{modalCapitalize}}Page extends Component {
      this.fetchList( {{modal}}Page);
   }
 
-  fetchList = (page,name) => {
+  fetchList = (page,values) => {
     const {get{{modalCapitalize}}List} = this.props.actions;
     get{{modalCapitalize}}List(page);
   }
@@ -57,13 +57,21 @@ export class {{modalCapitalize}}Page extends Component {
         }
       },
       op:[
-        {
+       {
           key:1,
-          name:'编辑'
+          name:'编辑',
+          buttonProps:{
+            icon:"edit",
+            type:"primary"
+          },
         },
         {
           key:3,
           name:'删除',
+          buttonProps:{
+            icon:"delete",
+            type:"danger"
+          },
           needConfirm:true,
           confirmTitle:"确认删除"
         }
@@ -143,6 +151,15 @@ export class {{modalCapitalize}}Page extends Component {
         ...query,
       },
       title:"",
+      searchElements: [
+        {
+            key: "loginId",
+            widget: Input,
+            widgetProps:{
+                placeholder:"请输入登录名"
+            },
+        },
+      ],
       onFilterChange: value => {
          this.fetchList({{modal}}Page,value.name)
       },
@@ -152,10 +169,31 @@ export class {{modalCapitalize}}Page extends Component {
     }
   }
 
+  get buttonProps() {
+    const { location,actions,{{feature}} } = this.props
+    const { query } = location
+    const { current{{modalCapitalize}},{{modal}}Page} = {{feature}}
+    const { {{modal}}ModalChange } = actions;
+
+    return {
+        buttons:[
+            {
+                name:"新增",
+                buttonProps:{
+                    type:"primary",
+                    icon:"plus",
+                },
+                onClick:()=>{ {{modal}}ModalChange(true,'create')}
+            }
+        ]
+    }
+  }
+
   render() {
     return (
       <Page inner>
         <CrudFilter {...this.filterProps} />
+        <CrudButtons {...this.buttonProps} />
         <CrudTable {...this.listProps} />
         <CrudForm {...this.modalProps} />
       </Page>

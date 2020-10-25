@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
-
+import { FormBuilder } from '../../components'
 const { Search } = Input
 
 const ColProps = {
@@ -12,6 +12,15 @@ const ColProps = {
   style: {
     marginBottom: 16,
   },
+}
+
+const formItemLayout = {
+    labelCol: {
+      span: 6,
+    },
+    wrapperCol: {
+      span: 14,
+    },
 }
 
 const TwoColProps = {
@@ -55,8 +64,22 @@ class Filter extends Component {
     onFilterChange(fields)
   }
 
+  renderElements = (element) => {
+    const { form } = this.props
+    const { getFieldDecorator } = form
+      return  <Form.Item>
+        {getFieldDecorator(
+          element.id || element.key,
+        )(
+          <element.widget {...element.widgetProps}>
+            {element.children || null}
+          </element.widget>
+        )}
+    </Form.Item>
+  }
+
   render() {
-    const { onAdd, filter, form,title } = this.props
+    const { onAdd, filter, form,title,searchElements } = this.props
     const { getFieldDecorator } = form
     const { name, address } = filter
 
@@ -69,45 +92,32 @@ class Filter extends Component {
     }
 
     return (
-      <Row gutter={24}>
-        <Col {...ColProps} xl={{ span: 8 }} md={{ span: 8 }}>
-          {title != undefined ?
-          <div style={{fontSize:'18px'}}>{title}</div>
-          :
-          getFieldDecorator('name', { initialValue: name })(
-            <Search
-              placeholder={`请输入关键字`}
-              onSearch={this.handleSubmit}
-            />
-          )
-          }
-        </Col>
-        <Col
-          {...TwoColProps}
-          xl={{ span: 16 }}
-          md={{ span: 24 }}
-          sm={{ span: 24 }}
-        >
-          <Row type="flex" align="middle" justify={title == undefined ? "space-between":"end"} >
-            {title == undefined ?
+        <Form layout="inline" onSubmit={this.handleSubmit}>
+            {searchElements != undefined?
             <div>
-              <Button
-                type="primary"
-                className="margin-right"
-                onClick={this.handleSubmit}
-              >
-                搜索
-              </Button>
-              <Button onClick={this.handleReset}>
-                重置
-              </Button>
-            </div> :null}
-            <Button type="ghost" onClick={onAdd}>
-                新增
-            </Button>
-          </Row>
-        </Col>
-      </Row>
+             {searchElements.map(this.renderElements)}
+             <Form.Item>
+               <Button
+                 type="default"
+                 className="margin-right"
+                 icon="search"
+                 style={{backgroundColor:"#16c75f",color:"white"}}
+                 onClick={this.handleSubmit}
+               >
+                 搜索
+               </Button>
+               <Button  
+               type="default"
+               style={{backgroundColor:"#feb21a",color:"white"}}
+               icon="redo"  
+               onClick={this.handleReset}>
+                 重置
+               </Button>
+           </Form.Item>
+           </div>
+            : null}
+           
+      </Form>
     )
   }
 }

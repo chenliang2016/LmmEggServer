@@ -8,7 +8,7 @@ import { Input,TreeSelect } from 'antd'
 
 import { Page,Crud } from '../../components'
 
-const {CrudTable,CrudForm,CrudFilter} = Crud
+const {CrudTable,CrudForm,CrudFilter,CrudButtons} = Crud
 
 export class DeptPage extends Component {
   static propTypes = {
@@ -78,15 +78,24 @@ export class DeptPage extends Component {
       },
       op:[
         {
-          key:1,
-          name:'编辑'
-        },
-        {
-          key:3,
-          name:'删除',
-          needConfirm:true,
-          confirmTitle:"确认删除"
-        }
+            key:1,
+            name:'编辑',
+          //   color:"#ffffff",
+            buttonProps:{
+              icon:"edit",
+              type:"primary"
+            },
+          },
+          {
+            key:3,
+            name:'删除',
+            buttonProps:{
+              icon:"delete",
+              type:"danger"
+            },
+            needConfirm:true,
+            confirmTitle:"确认删除"
+          }
       ],
       handleMenuClick: (record,item) => {
         if (item.key == 1){
@@ -100,6 +109,25 @@ export class DeptPage extends Component {
       }
     }
   } 
+
+  get buttonProps() {
+    const { location,actions,admin } = this.props
+    const { query } = location
+    const { currentDept,deptPage} = admin
+    const { deptModalChange } = actions;
+    return {
+        buttons:[
+            {
+                name:"新增",
+                buttonProps:{
+                    type:"primary",
+                    icon:"plus",
+                },
+                onClick:()=>{deptModalChange(true,'create')}
+            },
+        ]
+    }
+  }
 
   onChange = (value) => {
      console.log(value);
@@ -179,6 +207,7 @@ export class DeptPage extends Component {
     return (
       <Page inner>
         <CrudFilter {...this.filterProps} />
+        <CrudButtons {...this.buttonProps} />
         <CrudTable {...this.listProps} />
         <CrudForm {...this.modalProps} />
       </Page>

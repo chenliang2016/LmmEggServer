@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Modal, Avatar,Divider } from 'antd'
+import { Table, Modal, Avatar,Divider,Button } from 'antd'
 import moment from 'moment';
 
 const { confirm } = Modal
@@ -39,9 +39,18 @@ class List extends PureComponent {
             return  <span>
              {op.map( (item,i) => {
                  if (i != op.length -1){
-                    return (<span> <a onClick = {(e) => this.handleMenuClick(record,item)}>{item.name}</a> <Divider type="vertical" /></span>)
+                     if (item.buttonProps != undefined){
+                         return <span> <Button  style={{width:50,backgroundColor:item.color}} onClick = {(e) => this.handleMenuClick(record,item)} {...item.buttonProps} /> </span>
+                     }else {
+                        return (<span><a onClick = {(e) => this.handleMenuClick(record,item)}>{item.name}</a> <Divider type="vertical" /></span>)
+                     }
                  }else{
-                    return (<span> <a onClick = {(e) => this.handleMenuClick(record,item)}>{item.name}</a> </span>)
+                    if (item.buttonProps != undefined){
+                        return <span> <Button  style={{width:50,backgroundColor:item.color}} onClick = {(e) => this.handleMenuClick(record,item)} {...item.buttonProps} /> </span>
+                    }else {
+                        return (<span> <a onClick = {(e) => this.handleMenuClick(record,item)}>{item.name}</a> </span>)
+                    }
+                   
                  }
               })}
             </span>
@@ -56,9 +65,9 @@ class List extends PureComponent {
           ...tableProps.pagination,
           showTotal: total => `共 ${total} 项`,
         }}
-        bordered
         columns={cs}
         simple
+        size="middle"
         rowKey={record => record.id}
       />
     )

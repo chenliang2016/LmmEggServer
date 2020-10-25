@@ -44,44 +44,38 @@ class AdminService extends Service {
         return undefined;
     }
 
-    async list(page,size,shopId,appletId) {
+    async list(page,size,username,deptId) {
 
-        let where = {};
+        let sql = `select *  from a_admin where 1 = 1`
 
-        if (shopId != undefined){
-            where.shopId = shopId;
+        if (username != undefined){
+            sql = sql + ` and username like '%${username}%'`
         }
 
-        if (appletId != undefined){
-            where.appletId = appletId;
+        if (deptId != undefined){
+            sql = sql + ` and deptId = ${deptId}`
         }
 
-        let options = { 
-            where: where, 
-            orders: [['createAt','desc']], // 排序方式
-        }
+        sql = sql + ` order by createAt desc`
 
         if (page != undefined){
             let offset = (page - 1) * size;
-            options.limit = size
-            options.offset = offset
+            sql = sql + ` limit ${offset},${size}`
         }
-
-        const results = await this.app.mysql.select('a_admin', options);
-     
+        const results = await this.app.mysql.query(sql);
         return results;
     }
 
-    async count(shopId,appletId) {
+    async count(username,deptId) {
 
         let sql = `select count(1) as count from a_admin where 1 = 1`
 
-        if (shopId != undefined){
-            sql = sql + ` and shopId = ${shopId}`
+        if (username != undefined){
+            sql = sql + ` and username = '${username}'`
         }
 
-        if (appletId != undefined){
-            sql = sql + ` and appletId = ${appletId}`
+        if (deptId != undefined){
+            sql = sql + ` and deptId = ${deptId}`
         }
 
         const results = await this.app.mysql.query(sql);
