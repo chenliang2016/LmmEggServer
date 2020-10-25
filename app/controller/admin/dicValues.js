@@ -11,10 +11,10 @@ class dicValuesController extends Controller {
         const page = parseInt(data.page);
         const size = parseInt(data.size);
         const dicNameId = parseInt(data.dicNameId);
-        const tag = data.tag;
+        const dicName = data.dicName;
       
-        let list = await ctx.service.admin.dicValues.list(page, size,dicNameId,tag);
-        let count = await ctx.service.admin.dicValues.count(dicNameId,tag);
+        let list = await ctx.service.admin.dicValues.list(page, size,dicNameId,dicName);
+        let count = await ctx.service.admin.dicValues.count(dicNameId,dicName);
         this.success({list,count});
     }
 

@@ -32,16 +32,16 @@ class dicValuesService extends Service {
         return result;
     }
     
-    async list(page,size,dicNameId,tag) {
+    async list(page,size,dicNameId,dicName) {
 
         let sql = `select v.*,n.name  from a_dic_values v inner join a_dic_name n on v.dicNameId = n.id where 1 = 1`
 
         if (dicNameId != undefined){
-            sql = sql + ` and dicNameId = ${dicNameId}`
+            sql = sql + ` and v.dicNameId = ${dicNameId}`
         }
 
-        if (tag != undefined){
-            sql = sql + ` and tag = '${tag}'`
+        if (dicName != undefined){
+            sql = sql + ` and n.dicName = '${dicName}'`
         }
 
         sql = sql + ` order by orderNum desc`
@@ -54,7 +54,7 @@ class dicValuesService extends Service {
         return results;
     }
 
-    async count(dicNameId,tag) {
+    async count(dicNameId,dicName) {
 
         let sql = `select count(1) as count from a_dic_values where 1 = 1`
 
@@ -62,8 +62,8 @@ class dicValuesService extends Service {
             sql = sql + ` and dicNameId = ${dicNameId}`
         }
 
-        if (tag != undefined){
-            sql = sql + ` and tag = '${tag}'`
+        if (dicName != undefined){
+            sql = sql + ` and n.dicName = '${dicName}'`
         }
 
         const results = await this.app.mysql.query(sql);
