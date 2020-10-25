@@ -1,34 +1,34 @@
 import {
-    {{feature}}_GET_{{modalUpcase}}_LIST_BEGIN,
-    {{feature}}_GET_{{modalUpcase}}_LIST_SUCCESS,
-    {{feature}}_GET_{{modalUpcase}}_LIST_FAILURE,
-    {{feature}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR,
+    ADMIN_GET_DICNAME_LIST_BEGIN,
+    ADMIN_GET_DICNAME_LIST_SUCCESS,
+    ADMIN_GET_DICNAME_LIST_FAILURE,
+    ADMIN_GET_DICNAME_LIST_DISMISS_ERROR,
   } from './constants';
   
   import request from '../../../utils/request'
   // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
   // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-  export function get{{modalCapitalize}}List(params) {
+  export function getDicnameList(params) {
     return (dispatch) => { // optionally you can have getState as the second argument
       dispatch({
-        type: {{feature}}_GET_{{modalUpcase}}_LIST_BEGIN,
+        type: ADMIN_GET_DICNAME_LIST_BEGIN,
       });
      params.size = 10;
 
      const promise = new Promise((resolve, reject) => {
           request({
             method:'post',
-            url:'{{listUrl}}',
+            url:'/api/b/dicname/list',
             data:params,
           }).then( data => {
               dispatch({
-                  type: {{feature}}_GET_{{modalUpcase}}_LIST_SUCCESS,
+                  type: ADMIN_GET_DICNAME_LIST_SUCCESS,
                   data: Object.assign({},data,{page:params.page}),
               });
               resolve(data);
           }).catch (error => {
               dispatch({
-                type: {{feature}}_GET_{{modalUpcase}}_LIST_FAILURE,
+                type: ADMIN_GET_DICNAME_LIST_FAILURE,
                 data: { error: error },
               });
               reject(error);
@@ -41,23 +41,23 @@ import {
   
   // Async action saves request error by default, this method is used to dismiss the error info.
   // If you don't want errors to be saved in Redux store, just ignore this method.
-  export function dismissGet{{modalCapitalize}}ListError() {
+  export function dismissGetDicnameListError() {
     return {
-      type: {{feature}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR,
+      type: ADMIN_GET_DICNAME_LIST_DISMISS_ERROR,
     };
   }
   
   export function reducer(state, action) {
     switch (action.type) {
-      case {{feature}}_GET_{{modalUpcase}}_LIST_BEGIN:
+      case ADMIN_GET_DICNAME_LIST_BEGIN:
         // Just after a request is sent
         return {
           ...state,
-          get{{modalCapitalize}}ListPending: true,
-          get{{modalCapitalize}}ListError: null,
+          getDicnameListPending: true,
+          getDicnameListError: null,
         };
   
-      case {{feature}}_GET_{{modalUpcase}}_LIST_SUCCESS:
+      case ADMIN_GET_DICNAME_LIST_SUCCESS:
         // The request is success
   
         const byId = {};
@@ -68,28 +68,28 @@ import {
         });
         return {
           ...state,
-          {{modal}}ById:byId,
-          {{modal}}List:items,
-          {{modal}}Page: action.data.page,
-          {{modal}}Size: action.data.size,
-          {{modal}}Total: action.data.total,
-          get{{modalCapitalize}}ListPending: false,
-          get{{modalCapitalize}}ListError: null,
+          dicnameById:byId,
+          dicnameList:items,
+          dicnamePage: action.data.page,
+          dicnameSize: action.data.size,
+          dicnameTotal: action.data.total,
+          getDicnameListPending: false,
+          getDicnameListError: null,
         };
   
-      case {{feature}}_GET_{{modalUpcase}}_LIST_FAILURE:
+      case ADMIN_GET_DICNAME_LIST_FAILURE:
         // The request is failed
         return {
           ...state,
-          get{{modalCapitalize}}ListPending: false,
-          get{{modalCapitalize}}ListError: action.data.error,
+          getDicnameListPending: false,
+          getDicnameListError: action.data.error,
         };
   
-      case {{feature}}_GET_{{modalUpcase}}_LIST_DISMISS_ERROR:
+      case ADMIN_GET_DICNAME_LIST_DISMISS_ERROR:
         // Dismiss the request failure error
         return {
           ...state,
-          get{{modalCapitalize}}ListError: null,
+          getDicnameListError: null,
         };
   
       default:

@@ -23,7 +23,8 @@ export class {{modalCapitalize}}Page extends Component {
 
   fetchList = (page,values) => {
     const {get{{modalCapitalize}}List} = this.props.actions;
-    get{{modalCapitalize}}List(page);
+    let params = Object.assign({},{page:page},values)
+    get{{modalCapitalize}}List(params);
   }
 
   getDataSource() {

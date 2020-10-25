@@ -1,17 +1,17 @@
 import {
-    {{feature}}_DELETE_{{modalUpcase}}_BEGIN,
-    {{feature}}_DELETE_{{modalUpcase}}_SUCCESS,
-    {{feature}}_DELETE_{{modalUpcase}}_FAILURE,
-    {{feature}}_DELETE_{{modalUpcase}}_DISMISS_ERROR,
+    ADMIN_DELETE_DICNAME_BEGIN,
+    ADMIN_DELETE_DICNAME_SUCCESS,
+    ADMIN_DELETE_DICNAME_FAILURE,
+    ADMIN_DELETE_DICNAME_DISMISS_ERROR,
   } from './constants';
   
   import request from '../../../utils/request'
   // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
   // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-  export function delete{{modalCapitalize}}(id) {
+  export function deleteDicname(id) {
     return (dispatch) => { // optionally you can have getState as the second argument
       dispatch({
-        type: {{feature}}_DELETE_{{modalUpcase}}_BEGIN,
+        type: ADMIN_DELETE_DICNAME_BEGIN,
       });
   
       // Return a promise so that you could control UI flow without states in the store.
@@ -21,16 +21,16 @@ import {
       const promise = new Promise((resolve, reject) => {
           request({
             method:'post',
-            url:'{{deleteUrl}}',
+            url:'/api/b/dicname/delete',
             data:{id:id}
           }).then( data => {
               dispatch({
-                  type: {{feature}}_DELETE_{{modalUpcase}}_SUCCESS,
+                  type: ADMIN_DELETE_DICNAME_SUCCESS,
               });
               resolve(data);
           }).catch (error => {
               dispatch({
-                type: {{feature}}_DELETE_{{modalUpcase}}_FAILURE,
+                type: ADMIN_DELETE_DICNAME_FAILURE,
                 data: { error: error },
               });
               reject(error);
@@ -43,43 +43,43 @@ import {
   
   // Async action saves request error by default, this method is used to dismiss the error info.
   // If you don't want errors to be saved in Redux store, just ignore this method.
-  export function dismissDelete{{modalCapitalize}}Error() {
+  export function dismissDeleteDicnameError() {
     return {
-      type: {{feature}}_DELETE_{{modalUpcase}}_DISMISS_ERROR,
+      type: ADMIN_DELETE_DICNAME_DISMISS_ERROR,
     };
   }
   
   export function reducer(state, action) {
     switch (action.type) {
-      case {{feature}}_DELETE_{{modalUpcase}}_BEGIN:
+      case ADMIN_DELETE_DICNAME_BEGIN:
         // Just after a request is sent
         return {
           ...state,
-          delete{{modalCapitalize}}Pending: true,
-          delete{{modalCapitalize}}Error: null,
+          deleteDicnamePending: true,
+          deleteDicnameError: null,
         };
   
-      case {{feature}}_DELETE_{{modalUpcase}}_SUCCESS:
+      case ADMIN_DELETE_DICNAME_SUCCESS:
         // The request is success
         return {
           ...state,
-          delete{{modalCapitalize}}Pending: false,
-          delete{{modalCapitalize}}Error: null,
+          deleteDicnamePending: false,
+          deleteDicnameError: null,
         };
   
-      case {{feature}}_DELETE_{{modalUpcase}}_FAILURE:
+      case ADMIN_DELETE_DICNAME_FAILURE:
         // The request is failed
         return {
           ...state,
-          delete{{modalCapitalize}}Pending: false,
-          delete{{modalCapitalize}}Error: action.data.error,
+          deleteDicnamePending: false,
+          deleteDicnameError: action.data.error,
         };
   
-      case {{feature}}_DELETE_{{modalUpcase}}_DISMISS_ERROR:
+      case ADMIN_DELETE_DICNAME_DISMISS_ERROR:
         // Dismiss the request failure error
         return {
           ...state,
-          delete{{modalCapitalize}}Error: null,
+          deleteDicnameError: null,
         };
   
       default:

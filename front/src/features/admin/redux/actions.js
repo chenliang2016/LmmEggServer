@@ -9,4 +9,15 @@ export { deleteDept, dismissDeleteDeptError } from './deleteDept';
 export { deptModalChange } from './deptModalChange';
 export { chooseCurrentDept } from './chooseCurrentDept';
 export { getAllDept, dismissGetAllDeptError } from './getAllDept';
+export { getDicnameList, dismissGetDicnameListError } from './getDicnameList';
+export { submitDicname, dismissSubmitDicnameError } from './submitDicname';
+export { deleteDicname, dismissDeleteDicnameError } from './deleteDicname';
+export { dicnameModalChange } from './dicnameModalChange';
+export { chooseCurrentDicname } from './chooseCurrentDicname';
+export { getDicvaluesList, dismissGetDicvaluesListError } from './getDicvaluesList';
+export { submitDicvalues, dismissSubmitDicvaluesError } from './submitDicvalues';
+export { deleteDicvalues, dismissDeleteDicvaluesError } from './deleteDicvalues';
+export { dicvaluesModalChange } from './dicvaluesModalChange';
+export { chooseCurrentDicvalues } from './chooseCurrentDicvalues';
+
 

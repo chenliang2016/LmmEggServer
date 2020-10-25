@@ -10,6 +10,16 @@ import { reducer as deleteDeptReducer } from './deleteDept';
 import { reducer as deptModalChangeReducer } from './deptModalChange';
 import { reducer as chooseCurrentDeptReducer } from './chooseCurrentDept';
 import { reducer as getAllDeptReducer } from './getAllDept';
+import { reducer as getDicnameListReducer } from './getDicnameList';
+import { reducer as submitDicnameReducer } from './submitDicname';
+import { reducer as deleteDicnameReducer } from './deleteDicname';
+import { reducer as dicnameModalChangeReducer } from './dicnameModalChange';
+import { reducer as chooseCurrentDicnameReducer } from './chooseCurrentDicname';
+import { reducer as getDicvaluesListReducer } from './getDicvaluesList';
+import { reducer as submitDicvaluesReducer } from './submitDicvalues';
+import { reducer as deleteDicvaluesReducer } from './deleteDicvalues';
+import { reducer as dicvaluesModalChangeReducer } from './dicvaluesModalChange';
+import { reducer as chooseCurrentDicvaluesReducer } from './chooseCurrentDicvalues';
 
 const reducers = [
   getAdminListReducer,
@@ -23,6 +33,16 @@ const reducers = [
   deptModalChangeReducer,
   chooseCurrentDeptReducer,
   getAllDeptReducer,
+  getDicnameListReducer,
+  submitDicnameReducer,
+  deleteDicnameReducer,
+  dicnameModalChangeReducer,
+  chooseCurrentDicnameReducer,
+  getDicvaluesListReducer,
+  submitDicvaluesReducer,
+  deleteDicvaluesReducer,
+  dicvaluesModalChangeReducer,
+  chooseCurrentDicvaluesReducer,
 ];
 
 export default function reducer(state = initialState, action) {

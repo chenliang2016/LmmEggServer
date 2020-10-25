@@ -1,6 +1,6 @@
 const initialState = {
   {{modal}}List:[],
-  {{modal}}Page:0,
+  {{modal}}Page:1,
   {{modal}}Size:10,
   {{modal}}Total:0,
   {{modal}}ById:{},

@@ -15,4 +15,14 @@ module.exports = app => {
   router.post('/api/b/admin/delete', controller.admin.admin.delete);
   router.post('/api/b/admin/login', controller.admin.admin.login);
   
+  // 字典管理
+  router.post('/api/b/dicname/list', controller.admin.dicName.list);
+  router.post('/api/b/dicname/update', controller.admin.dicName.update);
+  router.post('/api/b/dicname/add', controller.admin.dicName.add);
+  router.post('/api/b/dicname/delete', controller.admin.dicName.delete);
+  router.post('/api/b/dicvalues/list', controller.admin.dicValues.list);
+  router.post('/api/b/dicvalues/update', controller.admin.dicValues.update);
+  router.post('/api/b/dicvalues/add', controller.admin.dicValues.add);
+  router.post('/api/b/dicvalues/delete', controller.admin.dicValues.delete);
+  
 };

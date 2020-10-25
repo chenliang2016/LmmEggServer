@@ -1,21 +1,21 @@
 import {
-    {{feature}}_SUBMIT_{{modalUpcase}}_BEGIN,
-    {{feature}}_SUBMIT_{{modalUpcase}}_SUCCESS,
-    {{feature}}_SUBMIT_{{modalUpcase}}_FAILURE,
-    {{feature}}_SUBMIT_{{modalUpcase}}_DISMISS_ERROR,
+    ADMIN_SUBMIT_DICNAME_BEGIN,
+    ADMIN_SUBMIT_DICNAME_SUCCESS,
+    ADMIN_SUBMIT_DICNAME_FAILURE,
+    ADMIN_SUBMIT_DICNAME_DISMISS_ERROR,
 } from './constants';
 import request from '../../../utils/request'
 
-export function submit{{modalCapitalize}}(params) {
+export function submitDicname(params) {
     return (dispatch) => { // optionally you can have getState as the second argument
       dispatch({
-        type: {{feature}}_SUBMIT_{{modalUpcase}}_BEGIN,
+        type: ADMIN_SUBMIT_DICNAME_BEGIN,
       });
   
-      let apiurl = '{{addUrl}}';
+      let apiurl = '/api/b/dicname/add';
     
     if (params.id != undefined){
-      apiurl = '{{updateUrl}}';
+      apiurl = '/api/b/dicname/update';
     }
 
     const promise = new Promise((resolve, reject) => {
@@ -25,13 +25,13 @@ export function submit{{modalCapitalize}}(params) {
           data: params,
         }).then( data => {
             dispatch({
-                type: {{feature}}_SUBMIT_{{modalUpcase}}_SUCCESS,
+                type: ADMIN_SUBMIT_DICNAME_SUCCESS,
                 data: data,
             });
             resolve(data);
         }).catch (error => {
             dispatch({
-              type: {{feature}}_SUBMIT_{{modalUpcase}}_FAILURE,
+              type: ADMIN_SUBMIT_DICNAME_FAILURE,
               data: { error: error },
             });
             reject(error);
@@ -44,43 +44,43 @@ export function submit{{modalCapitalize}}(params) {
   
   // Async action saves request error by default, this method is used to dismiss the error info.
   // If you don't want errors to be saved in Redux store, just ignore this method.
-  export function dismissSubmit{{modalCapitalize}}Error() {
+  export function dismissSubmitDicnameError() {
     return {
-      type: {{feature}}_SUBMIT_{{modalUpcase}}_DISMISS_ERROR,
+      type: ADMIN_SUBMIT_DICNAME_DISMISS_ERROR,
     };
   }
   
   export function reducer(state, action) {
     switch (action.type) {
-      case {{feature}}_SUBMIT_{{modalUpcase}}_BEGIN:
+      case ADMIN_SUBMIT_DICNAME_BEGIN:
         // Just after a request is sent
         return {
           ...state,
-          submit{{modalCapitalize}}Pending: true,
-          submit{{modalCapitalize}}Error: null,
+          submitDicnamePending: true,
+          submitDicnameError: null,
         };
   
-      case {{feature}}_SUBMIT_{{modalUpcase}}_SUCCESS:
+      case ADMIN_SUBMIT_DICNAME_SUCCESS:
         // The request is success
         return {
           ...state,
-          submit{{modalCapitalize}}Pending: false,
-          submit{{modalCapitalize}}Error: null,
+          submitDicnamePending: false,
+          submitDicnameError: null,
         };
   
-      case {{feature}}_SUBMIT_{{modalUpcase}}_FAILURE:
+      case ADMIN_SUBMIT_DICNAME_FAILURE:
         // The request is failed
         return {
           ...state,
-          submit{{modalCapitalize}}Pending: false,
-          submit{{modalCapitalize}}Error: action.data.error,
+          submitDicnamePending: false,
+          submitDicnameError: action.data.error,
         };
   
-      case {{feature}}_SUBMIT_{{modalUpcase}}_DISMISS_ERROR:
+      case ADMIN_SUBMIT_DICNAME_DISMISS_ERROR:
         // Dismiss the request failure error
         return {
           ...state,
-          submit{{modalCapitalize}}Error: null,
+          submitDicnameError: null,
         };
   
       default:
