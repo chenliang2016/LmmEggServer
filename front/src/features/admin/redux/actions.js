@@ -19,5 +19,6 @@ export { submitDicvalues, dismissSubmitDicvaluesError } from './submitDicvalues'
 export { deleteDicvalues, dismissDeleteDicvaluesError } from './deleteDicvalues';
 export { dicvaluesModalChange } from './dicvaluesModalChange';
 export { chooseCurrentDicvalues } from './chooseCurrentDicvalues';
+export { getDicList, dismissGetDicListError } from './getDicList';
 
 

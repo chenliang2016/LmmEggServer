@@ -41,7 +41,7 @@ class dicValuesService extends Service {
         }
 
         if (dicName != undefined){
-            sql = sql + ` and n.dicName = '${dicName}'`
+            sql = sql + ` and n.name = '${dicName}'`
         }
 
         sql = sql + ` order by orderNum desc`
@@ -56,20 +56,21 @@ class dicValuesService extends Service {
 
     async count(dicNameId,dicName) {
 
-        let sql = `select count(1) as count from a_dic_values where 1 = 1`
+        let sql = `select count(1)  from a_dic_values v inner join a_dic_name n on v.dicNameId = n.id where 1 = 1`
 
         if (dicNameId != undefined){
-            sql = sql + ` and dicNameId = ${dicNameId}`
+            sql = sql + ` and v.dicNameId = ${dicNameId}`
         }
 
         if (dicName != undefined){
-            sql = sql + ` and n.dicName = '${dicName}'`
+            sql = sql + ` and n.name = '${dicName}'`
         }
 
         const results = await this.app.mysql.query(sql);
      
         return results[0].count;
     }
+
 
 }
 

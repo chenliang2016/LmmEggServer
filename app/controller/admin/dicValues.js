@@ -8,13 +8,10 @@ class dicValuesController extends Controller {
             app
         } = this;
         const data = ctx.request.body;
-        const page = parseInt(data.page);
-        const size = parseInt(data.size);
-        const dicNameId = parseInt(data.dicNameId);
         const dicName = data.dicName;
       
-        let list = await ctx.service.admin.dicValues.list(page, size,dicNameId,dicName);
-        let count = await ctx.service.admin.dicValues.count(dicNameId,dicName);
+        let list = await ctx.service.admin.dicValues.list(data.page, data.size,data.dicNameId,dicName);
+        let count = await ctx.service.admin.dicValues.count(data.dicNameId,dicName);
         this.success({list,count});
     }
 

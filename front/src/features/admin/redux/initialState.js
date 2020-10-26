@@ -59,6 +59,9 @@ const initialState = {
   submitDicvaluesError: null,
   deleteDicvaluesPending: false,
   deleteDicvaluesError: null,
+  getDicListPending: false,
+  getDicListError: null,
+  dicTypes:{}
 };
 
 export default initialState;

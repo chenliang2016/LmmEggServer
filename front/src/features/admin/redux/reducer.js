@@ -20,6 +20,7 @@ import { reducer as submitDicvaluesReducer } from './submitDicvalues';
 import { reducer as deleteDicvaluesReducer } from './deleteDicvalues';
 import { reducer as dicvaluesModalChangeReducer } from './dicvaluesModalChange';
 import { reducer as chooseCurrentDicvaluesReducer } from './chooseCurrentDicvalues';
+import { reducer as getDicListReducer } from './getDicList';
 
 const reducers = [
   getAdminListReducer,
@@ -43,6 +44,7 @@ const reducers = [
   deleteDicvaluesReducer,
   dicvaluesModalChangeReducer,
   chooseCurrentDicvaluesReducer,
+  getDicListReducer,
 ];
 
 export default function reducer(state = initialState, action) {
