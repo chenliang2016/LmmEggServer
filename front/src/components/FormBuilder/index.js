@@ -124,6 +124,7 @@ class FormBuilder extends Component {
         "class"
       ]),
       ...wp,
+      form:this.props.form,
       disabled:
         element.disabled ||
         wp.disabled ||

@@ -8,5 +8,6 @@ import FormBuilder from './FormBuilder/index.js'
 import * as Upload from './Upload/index.js'
 import * as Crud from './Crud/index.js'
 import LmmEdit from './Edit/index.js'
+import * as FormCustomItem from './FormCustomItem/index.js'
 
-export { MyLayout,ScrollBar,Loader,Page,FilterItem,FormBuilder,Upload,Crud,WebSiteLayout,LmmEdit }
+export { MyLayout,ScrollBar,Loader,Page,FilterItem,FormBuilder,Upload,Crud,WebSiteLayout,LmmEdit,FormCustomItem }

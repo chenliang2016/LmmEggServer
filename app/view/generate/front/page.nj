@@ -162,7 +162,7 @@ export class {{modalCapitalize}}Page extends Component {
         },
       ],
       onFilterChange: value => {
-         this.fetchList({{modal}}Page,value.name)
+         this.fetchList({{modal}}Page,value)
       },
       onAdd() {
         {{modal}}ModalChange(true,'create')

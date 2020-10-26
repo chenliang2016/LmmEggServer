@@ -4,29 +4,6 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Form, Button, Row, Col, DatePicker, Input, Cascader } from 'antd'
 import { FormBuilder } from '../../components'
-const { Search } = Input
-
-const ColProps = {
-  xs: 24,
-  sm: 12,
-  style: {
-    marginBottom: 16,
-  },
-}
-
-const formItemLayout = {
-    labelCol: {
-      span: 6,
-    },
-    wrapperCol: {
-      span: 14,
-    },
-}
-
-const TwoColProps = {
-  ...ColProps,
-  xl: 96,
-}
 
 class Filter extends Component {
 
@@ -79,17 +56,7 @@ class Filter extends Component {
   }
 
   render() {
-    const { onAdd, filter, form,title,searchElements } = this.props
-    const { getFieldDecorator } = form
-    const { name, address } = filter
-
-    let initialCreateTime = []
-    if (filter.createTime && filter.createTime[0]) {
-      initialCreateTime[0] = moment(filter.createTime[0])
-    }
-    if (filter.createTime && filter.createTime[1]) {
-      initialCreateTime[1] = moment(filter.createTime[1])
-    }
+    const {searchElements } = this.props
 
     return (
         <Form layout="inline" onSubmit={this.handleSubmit}>
