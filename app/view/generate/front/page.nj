@@ -142,15 +142,11 @@ export class {{modalCapitalize}}Page extends Component {
   }
 
   get filterProps() {
-    const { location,actions,{{feature}} } = this.props
-    const { query } = location
+    const { actions,{{feature}} } = this.props
     const { current{{modalCapitalize}},{{modal}}Page} = {{feature}}
     const { {{modal}}ModalChange } = actions;
 
     return {
-      filter: {
-        ...query,
-      },
       title:"",
       searchElements: [
         {
@@ -171,8 +167,7 @@ export class {{modalCapitalize}}Page extends Component {
   }
 
   get buttonProps() {
-    const { location,actions,{{feature}} } = this.props
-    const { query } = location
+    const { actions,{{feature}} } = this.props
     const { current{{modalCapitalize}},{{modal}}Page} = {{feature}}
     const { {{modal}}ModalChange } = actions;
 

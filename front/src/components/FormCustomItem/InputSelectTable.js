@@ -49,12 +49,13 @@ export default class InputSelectTable extends Component {
             width:1000
         }
 
-        const rowSelection = {
+        let rowSelection = {
             onChange:(keys,record) => {
-                console.log(record)
                 this.chooseRecord = record;
             },
-            type:"radio"
+        }
+        if (this.props.chooseType != undefined){
+            rowSelection.type = this.props.chooseType
         }
 
         const { value,PageWidget } = this.props;
