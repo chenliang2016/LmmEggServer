@@ -59,7 +59,9 @@ class Filter extends Component {
     const {searchElements } = this.props
 
     return (
-        <Form layout="inline" onSubmit={this.handleSubmit}>
+        <Form layout="inline" onSubmit={this.handleSubmit} style={{
+            marginBottom:10,
+          }}>
             {searchElements != undefined?
             <div>
              {searchElements.map(this.renderElements)}

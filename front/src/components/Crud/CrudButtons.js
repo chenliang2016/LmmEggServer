@@ -5,16 +5,18 @@ import { Button, Row, Col, Input } from 'antd'
 class Buttons extends Component {
 
   render() {
-    const { buttons,title } = this.props
+    const { buttons,title,floatRight } = this.props
+    let justify = "space-between"
+    if (floatRight != undefined && floatRight == true){
+        justify = "end"
+    }
     return (
-      <Row gutter={24} style={{marginTop:10}}>
-        <Col
-          style={{
-            marginBottom:16,
-          }}
-        >
+      <Row gutter={24} align="middle" style={{
+            marginBottom:10
+        }}>
+        <Col>
             {title != undefined ?
-            <Row type="flex" align="middle" justify="space-between" >
+            <Row type="flex" align="middle" justify={justify} >
                 <div style={{fontSize:20}}>{title}</div>
                 {buttons.map(item => {
                     if (item.name != undefined){
@@ -24,7 +26,9 @@ class Buttons extends Component {
                 })}
             </Row>
            : 
-           <Row type="flex" align="middle" justify="space-between" >
+           <Row type="flex" style={{
+                height:40,
+            }} align="middle" justify={justify} >
             <div>
               {buttons.map(item => {
                   if (item.name != undefined){

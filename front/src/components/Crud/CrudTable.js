@@ -58,13 +58,19 @@ class List extends PureComponent {
       })
     }
 
+    let p = {
+        ...tableProps.pagination,
+        showTotal: total => `共 ${total} 项`,
+    }
+
+    if (!tableProps.pagination){
+        p = false
+    }
+
     return (
       <Table
         {...tableProps}
-        pagination={{
-          ...tableProps.pagination,
-          showTotal: total => `共 ${total} 项`,
-        }}
+        pagination={p}
         columns={cs}
         simple
         size="middle"
