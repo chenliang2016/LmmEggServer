@@ -24,5 +24,12 @@ module.exports = app => {
   router.post('/api/b/dicvalues/update', controller.admin.dicValues.update);
   router.post('/api/b/dicvalues/add', controller.admin.dicValues.add);
   router.post('/api/b/dicvalues/delete', controller.admin.dicValues.delete);
+
+  // 附件管理
+  router.post('/api/b/file/list', controller.admin.aFile.list);
+  router.post('/api/b/file/update', controller.admin.aFile.update);
+  router.post('/api/b/file/add', controller.admin.aFile.add);
+  router.post('/api/b/file/delete', controller.admin.aFile.delete);
+  router.post('/api/b/file/upload', controller.admin.upload.uploadFile);
   
 };

@@ -12,6 +12,7 @@ import errorRoute from '../features/error/route';
 import systemRoute from '../features/system/route';
 import generateRoute from '../features/generate/route';
 import adminRoute from '../features/admin/route';
+import fileRoute from '../features/file/route';
 
 // NOTE: DO NOT CHANGE the 'childRoutes' name and the declaration pattern.
 // This is used for Rekit cmds to register routes config for new features, and remove config when remove features, etc.
@@ -23,6 +24,7 @@ const childRoutes = [
   systemRoute,
   generateRoute,
   adminRoute,
+  fileRoute,
 ];
 
 const childRoutesWithoutMenu = [loginRoute];

@@ -3,24 +3,24 @@ import { Upload, message, Button, Icon } from 'antd';
 
 export default class UploadFile extends Component {
 
-  static getDerivedStateFromProps(nextProps){
-    // Should be a controlled component.
-    if ('value' in nextProps) {
-      let newFileList = nextProps.value.map((item,i) => {
-        return {
-          uid:-i,
-          name:item.name,
-          status: 'done',
-          url: item.url,
-        }
-      })
-      return {
-        ...(nextProps.value || {}),
-        fileList:newFileList,
-      };
-    }
-    return null;
-  }
+//   static getDerivedStateFromProps(nextProps){
+//     // Should be a controlled component.
+//     if ('value' in nextProps) {
+//       let newFileList = nextProps.value.map((item,i) => {
+//         return {
+//           uid:-i,
+//           name:item.name,
+//           status: 'done',
+//           url: item.url,
+//         }
+//       })
+//       return {
+//         ...(nextProps.value || {}),
+//         fileList:newFileList,
+//       };
+//     }
+//     return null;
+//   }
 
     constructor(props) {
       super(props);
@@ -42,8 +42,7 @@ export default class UploadFile extends Component {
       })
     }
 
-    convertFileListToValue = () => {
-      const fileList = this.state.fileList;
+    convertFileListToValue = (fileList) => {
       return fileList.map((item,i) => {
         return {
           name:item.name,
@@ -55,33 +54,15 @@ export default class UploadFile extends Component {
     triggerChange = changedValue => {
       // Should provide an event to pass value to Form.
       const { onChange } = this.props;
-      if (onChange) {
-        onChange(this.convertFileListToValue(changedValue));
-      }
+    //   if (onChange) {
+          console.log("转化的value")
+          console.log(this.convertFileListToValue(changedValue))
+          onChange(this.convertFileListToValue(changedValue));
+    //   }
     };
 
-    get uploadProps() {
-       return {
-        name: 'file',
-        listType: this.props.listType,
-        fileList: this.state.fileList,
-        action: this.props.action,
-        headers: {
-          authorization: 'authorization-text',
-        },
-        onChange : (info) => {
-          if (info.file.status !== 'uploading') {
-            console.log(info.file, info.fileList);
-          }
-          if (info.file.status === 'done') {
-            message.success(`${info.file.name} 上传成功`);
-          } else if (info.file.status === 'error') {
-            message.error(`${info.file.name} 上传失败`);
-          }
-
-          
-
-          let newFileList = info.fileList
+    onUploadSuccess = (info) => {
+        let newFileList = info.fileList
             .filter(item => {
               return item.status == "done" || item.status == "uploading"
             })
@@ -102,20 +83,68 @@ export default class UploadFile extends Component {
                 return item;
               }
             })
-          
+          console.log("新的newFileList",newFileList)
             // 独立的文件
           if (this.props.single != undefined){
             let singleFileList = [];
             singleFileList = newFileList.filter(item => {
               return item.uid == info.file.uid
             })
-            this.setState({fileList:singleFileList})
+            console.log(singleFileList)
             this.triggerChange(singleFileList);
             return;
           }
 
-          this.setState({fileList:newFileList})
           this.triggerChange(newFileList);
+    }
+
+    updateFileList = (info) => {
+        if (this.props.single != undefined){
+            let singleFileList = [];
+            singleFileList = info.fileList.filter(item => {
+              return item.uid == info.file.uid
+            })
+            console.log(singleFileList)
+            this.setState({fileList:singleFileList})
+        }else {
+            this.setState({fileList:info.fileList})
+        }
+    }
+
+    get uploadProps() {
+
+        let value = this.props.value;
+        console.log("图片的值",value);
+        let fileList = this.convertValueToFileList(value)
+
+       return {
+        name: 'file',
+        listType: this.props.listType,
+        fileList: this.state.fileList,
+        action: this.props.action,
+        headers: {
+          authorization: 'authorization-text',
+        },
+        onChange : (info) => {
+          console.log("onChange",info)
+        //   this.updateFileList(info)
+          let fileList = []
+          if (info.file.status === 'uploading') {
+            fileList = info.fileList;
+            this.triggerChange(info.fileList);
+          }
+          if (info.file.status === 'done') {
+            let fileResponse = info.file.response
+            if (fileResponse.status == "success"){
+                fileList = info.fileList
+                message.success(`${info.file.name} 上传成功`);
+                this.onUploadSuccess(info)
+            }else if (fileResponse.status == "fail"){
+                message.error(fileResponse.msg);
+                fileList = []
+            }
+          } 
+          this.setState({fileList:fileList})
         },
       }
     }

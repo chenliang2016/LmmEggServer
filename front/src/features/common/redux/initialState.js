@@ -43,6 +43,13 @@ const initialState = {
         menuParentId: "5",
         route: '/admin/dicName',
       },
+      {
+        id: '54',
+        icon: 'shop',
+        name: '存储管理',
+        menuParentId: "5",
+        route: '/file',
+      },
     ],
 };
 
