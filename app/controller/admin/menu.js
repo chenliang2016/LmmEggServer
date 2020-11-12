@@ -1,6 +1,6 @@
 'use strict';
 const Controller = require('../../core/base_controller');
-class {{class_name}}Controller extends Controller {
+class menuController extends Controller {
 
     async list() {
         const {
@@ -11,8 +11,8 @@ class {{class_name}}Controller extends Controller {
         const page = parseInt(data.page);
         const size = parseInt(data.size);
       
-        let list = await ctx.service.{{package}}.{{class_name}}.list(page, size);
-        let count = await ctx.service.{{package}}.{{class_name}}.count();
+        let list = await ctx.service.admin.menu.list(page, size);
+        let count = await ctx.service.admin.menu.count();
         this.success({list,count});
     }
 
@@ -22,7 +22,7 @@ class {{class_name}}Controller extends Controller {
             app
         } = this;
         const data = ctx.request.body;
-        let detail = await ctx.service.{{package}}.{{class_name}}.detail(data.id);
+        let detail = await ctx.service.admin.menu.detail(data.id);
 
         if (detail != undefined) {
             this.success(detail);
@@ -37,7 +37,7 @@ class {{class_name}}Controller extends Controller {
             app
         } = this;
         const data = ctx.request.body;
-        let res = await ctx.service.{{package}}.{{class_name}}.create(data);
+        let res = await ctx.service.admin.menu.create(data);
         if (res) {
             this.success(res)
         } else {
@@ -51,7 +51,7 @@ class {{class_name}}Controller extends Controller {
             app
         } = this;
         const data = ctx.request.body;
-        let res = await ctx.service.{{package}}.{{class_name}}.update(data);
+        let res = await ctx.service.admin.menu.update(data);
         if (res) {
             this.success('修改成功')
         } else {
@@ -63,10 +63,10 @@ class {{class_name}}Controller extends Controller {
         const { ctx, app } = this;
         var data = ctx.request.body;
         let id = data.id;
-        let res = await ctx.service.{{package}}.{{class_name}}.delete(id);
+        let res = await ctx.service.admin.menu.delete(id);
         this.success(res);
     }
     
 }
 
-module.exports = {{class_name}}Controller;
+module.exports = menuController;

@@ -9,10 +9,20 @@
 import initialState from './initialState';
 import { reducer as submitNodeReducer } from './submitNode';
 import { reducer as submitFrontReducer } from './submitFront';
+import { reducer as getMysqltableListReducer } from './getMysqltableList';
+import { reducer as submitMysqltableReducer } from './submitMysqltable';
+import { reducer as deleteMysqltableReducer } from './deleteMysqltable';
+import { reducer as mysqltableModalChangeReducer } from './mysqltableModalChange';
+import { reducer as chooseCurrentMysqltableReducer } from './chooseCurrentMysqltable';
 
 const reducers = [
   submitNodeReducer,
   submitFrontReducer,
+  getMysqltableListReducer,
+  submitMysqltableReducer,
+  deleteMysqltableReducer,
+  mysqltableModalChangeReducer,
+  chooseCurrentMysqltableReducer,
 ];
 
 export default function reducer(state = initialState, action) {

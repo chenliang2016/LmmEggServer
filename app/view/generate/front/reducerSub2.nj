@@ -1,0 +1,5 @@
+  get{{modalCapitalize}}ListReducer,
+  submit{{modalCapitalize}}Reducer,
+  delete{{modalCapitalize}}Reducer,
+  {{modal}}ModalChangeReducer,
+  chooseCurrent{{modalCapitalize}}Reducer,

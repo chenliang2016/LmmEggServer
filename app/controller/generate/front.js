@@ -143,11 +143,20 @@ class FrontController extends Controller {
     return await this.generateFile('generate/front/page.nj',c,packagePath,modalCapitalize + 'Page' + '.js')
   }
 
-  async generateFile(tmplUrl,params,packagePath,fileName,subDir){
+  async generateFile(tmplUrl,params,packagePath,fileName,subDir,isToDir){
     const {ctx} = this;
     const templ = await ctx.renderView(tmplUrl, params);
-    let __distFilePath = __dirname.replace("/controller/generate","") + "/public/generate" ;
-    __distFilePath = __distFilePath + "/" + packagePath + "/" ;
+    let __distFilePath = "";
+
+    if(isToDir != undefined && isToDir == 1){
+        __distFilePath = __dirname.replace("/app/controller/generate","/front/src/features")  ;
+        let packagePath = packageString.replace('.',"/");
+        __distFilePath = __distFilePath + "/" + packagePath + "/";
+    }else{
+        let __distFilePath = __dirname.replace("/controller/generate","") + "/public/generate" ;
+        __distFilePath = __distFilePath + "/" + packagePath + "/" ;
+    }
+
     if (subDir){
       __distFilePath = __distFilePath + subDir
     }

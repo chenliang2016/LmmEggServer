@@ -31,5 +31,11 @@ module.exports = app => {
   router.post('/api/b/file/add', controller.admin.aFile.add);
   router.post('/api/b/file/delete', controller.admin.aFile.delete);
   router.post('/api/b/file/upload', controller.admin.upload.uploadFile);
+
+  router.post('/api/b/menu/list', controller.admin.menu.list);
+  router.post('/api/b/menu/update', controller.admin.menu.update);
+  router.post('/api/b/menu/add', controller.admin.menu.add);
+  router.post('/api/b/menu/delete', controller.admin.menu.delete);
+  
   
 };

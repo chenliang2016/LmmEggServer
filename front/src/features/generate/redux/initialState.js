@@ -11,6 +11,20 @@ const initialState = {
   submitFrontPending: false,
   submitFrontError: null,
   downloadUrl:'',
+  mysqltableList:[],
+  mysqltablePage:1,
+  mysqltableSize:10,
+  mysqltableTotal:0,
+  mysqltableById:{},
+  mysqltableModalType:"create",
+  mysqltableModalVisible:false,
+  currentMysqltable:{},
+  getMysqltableListPending: false,
+  getMysqltableListError: null,
+  submitMysqltablePending: false,
+  submitMysqltableError: null,
+  deleteMysqltablePending: false,
+  deleteMysqltableError: null,
 };
 
 export default initialState;

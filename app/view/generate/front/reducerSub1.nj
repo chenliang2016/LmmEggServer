@@ -1,0 +1,5 @@
+import { reducer as get{{modalCapitalize}}ListReducer } from './get{{modalCapitalize}}List';
+import { reducer as submit{{modalCapitalize}}Reducer } from './submit{{modalCapitalize}}';
+import { reducer as delete{{modalCapitalize}}Reducer } from './delete{{modalCapitalize}}';
+import { reducer as {{modal}}ModalChangeReducer } from './{{modal}}ModalChange';
+import { reducer as chooseCurrent{{modalCapitalize}}Reducer } from './chooseCurrent{{modalCapitalize}}';

@@ -3,12 +3,13 @@
 
 import {
   DefaultPage,
+  MysqltablePage,
 } from './';
 
 export default {
   path: 'generate',
   name: 'Generate',
   childRoutes: [
-    { path: 'default-page', name: 'Default page', component: DefaultPage, isIndex: true },
+    { path: 'default-page', name: 'Default page', component: MysqltablePage, isIndex: true },
   ],
 };
