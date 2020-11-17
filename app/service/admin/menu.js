@@ -34,19 +34,19 @@ class menuService extends Service {
 
     
 
-    async list(page,size,username,deptId) {
+    async list(page,size,name,menuParentId) {
 
         let sql = `select *  from a_menu where 1 = 1`
 
-        if (username != undefined){
-            sql = sql + ` and username like '%${username}%'`
+        if (name != undefined){
+            sql = sql + ` and name like '%${name}%'`
         }
 
-        if (deptId != undefined){
-            sql = sql + ` and deptId = ${deptId}`
+        if (menuParentId != undefined){
+            sql = sql + ` and menuParentId = ${menuParentId}`
         }
 
-        sql = sql + ` order by createAt desc`
+        sql = sql + ` order by orderNum desc`
 
         if (page != undefined){
             let offset = (page - 1) * size;
@@ -56,21 +56,28 @@ class menuService extends Service {
         return results;
     }
 
-    async count(shopId,appletId) {
+    async count(name,menuParentId) {
 
         let sql = `select count(1) as count from a_menu where 1 = 1`
 
-        if (shopId != undefined){
-            sql = sql + ` and shopId = ${shopId}`
+        if (name != undefined){
+            sql = sql + ` and name like '%${name}%'`
         }
 
-        if (appletId != undefined){
-            sql = sql + ` and appletId = ${appletId}`
+        if (menuParentId != undefined){
+            sql = sql + ` and menuParentId = ${menuParentId}`
         }
 
         const results = await this.app.mysql.query(sql);
      
         return results[0].count;
+    }
+
+    async getMenuByRoleIds(roleIds) {
+        let sql = `select m.*  from a_menu m inner join a_menu_role mr on m.id = mr.menuId where mr.roleId in (${roleIds}) group by mr.menuId`
+        console.log(sql);
+        const results = await this.app.mysql.query(sql);
+        return results;
     }
 
 }

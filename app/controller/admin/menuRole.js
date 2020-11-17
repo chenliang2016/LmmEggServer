@@ -1,6 +1,6 @@
 'use strict';
 const Controller = require('../../core/base_controller');
-class AdminController extends Controller {
+class menuRoleController extends Controller {
 
     async list() {
         const {
@@ -8,14 +8,11 @@ class AdminController extends Controller {
             app
         } = this;
         const data = ctx.request.body;
-        console.log(data);
         const page = parseInt(data.page);
         const size = parseInt(data.size);
-        const username = data.username;
-        const deptId = data.deptId;
       
-        let list = await ctx.service.admin.admin.list(page, size,username,deptId);
-        let count = await ctx.service.admin.admin.count(username,deptId);
+        let list = await ctx.service.admin.menuRole.list(page, size);
+        let count = await ctx.service.admin.menuRole.count();
         this.success({list,count});
     }
 
@@ -25,7 +22,7 @@ class AdminController extends Controller {
             app
         } = this;
         const data = ctx.request.body;
-        let detail = await ctx.service.admin.admin.detail(data.id);
+        let detail = await ctx.service.admin.menuRole.detail(data.id);
 
         if (detail != undefined) {
             this.success(detail);
@@ -34,13 +31,43 @@ class AdminController extends Controller {
         }
     }
 
+    async configRole() {
+        const {
+            ctx,
+            app
+        } = this;
+        const data = ctx.request.body;
+        let res = await ctx.service.admin.menuRole.configRole(data.roleId,data.menuIds);
+        if (res == 1) {
+            this.success(res)
+        } else {
+            this.error('配置失败')
+        }
+    }
+
+    async getRoleMenu() {
+        const {
+            ctx,
+            app
+        } = this;
+        const data = ctx.request.body;
+        let res = await ctx.service.admin.menuRole.getRoleMenu(data.roleId);
+        if (res) {
+            this.success(res)
+        } else {
+            this.error('获取失败')
+        }
+    }
+
+    
+
     async add() {
         const {
             ctx,
             app
         } = this;
         const data = ctx.request.body;
-        let res = await ctx.service.admin.admin.create(data);
+        let res = await ctx.service.admin.menuRole.create(data);
         if (res) {
             this.success(res)
         } else {
@@ -54,7 +81,7 @@ class AdminController extends Controller {
             app
         } = this;
         const data = ctx.request.body;
-        let res = await ctx.service.admin.admin.update(data);
+        let res = await ctx.service.admin.menuRole.update(data);
         if (res) {
             this.success('修改成功')
         } else {
@@ -66,29 +93,10 @@ class AdminController extends Controller {
         const { ctx, app } = this;
         var data = ctx.request.body;
         let id = data.id;
-        let res = await ctx.service.admin.admin.delete(id);
+        let res = await ctx.service.admin.menuRole.delete(id);
         this.success(res);
     }
-
-    async login() {
-        const {
-            ctx,
-            app
-        } = this;
-        const data = ctx.request.body;
-        let user = await ctx.service.admin.admin.login(data);
-        let menus = [];
-        if (user.role != undefined){
-            menus = await ctx.service.admin.menu.getMenuByRoleIds(user.role);
-        }
-        if (user != undefined) {
-            this.success({user,menus})
-        } else {
-            this.error('添加失败')
-        }
-    }
-    
     
 }
 
-module.exports = AdminController;
+module.exports = menuRoleController;

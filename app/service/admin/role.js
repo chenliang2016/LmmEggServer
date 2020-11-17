@@ -1,9 +1,9 @@
 const Service = require('../../core/base_service');
 
-class AdminService extends Service {
+class roleService extends Service {
 
     async create(entity) {
-        const result = await this.app.mysql.insert('a_admin', entity);
+        const result = await this.app.mysql.insert('a_role', entity);
         const insertSuccess = result.affectedRows === 1;
         if (insertSuccess){
             let object = Object.assign({},entity,{id:result.insertId})
@@ -13,7 +13,7 @@ class AdminService extends Service {
     }
 
     async update(entity) {
-        const result = await this.app.mysql.update('a_admin', entity);
+        const result = await this.app.mysql.update('a_role', entity);
         const updateSuccess = result.affectedRows === 1;
         if (updateSuccess){
             return entity;
@@ -22,26 +22,21 @@ class AdminService extends Service {
     }
 
     async delete(id) {
-        const result = await this.app.mysql.delete('a_admin', {id});
+        const result = await this.app.mysql.delete('a_role', {id});
         const deleteSuccess = result.affectedRows === 1;
         return deleteSuccess;
     }
 
     async detail(id) {
-        const result = await this.app.mysql.get('a_admin',{id});
+        const result = await this.app.mysql.get('a_role',{id});
         return result;
     }
 
-    async login(params) {
-        const result = await this.app.mysql.get('a_admin',
-            params
-        );
-        return result;
-    }
+    
 
     async list(page,size,username,deptId) {
 
-        let sql = `select *  from a_admin where 1 = 1`
+        let sql = `select *  from a_role where 1 = 1`
 
         if (username != undefined){
             sql = sql + ` and username like '%${username}%'`
@@ -61,16 +56,16 @@ class AdminService extends Service {
         return results;
     }
 
-    async count(username,deptId) {
+    async count(shopId,appletId) {
 
-        let sql = `select count(1) as count from a_admin where 1 = 1`
+        let sql = `select count(1) as count from a_role where 1 = 1`
 
-        if (username != undefined){
-            sql = sql + ` and username = '${username}'`
+        if (shopId != undefined){
+            sql = sql + ` and shopId = ${shopId}`
         }
 
-        if (deptId != undefined){
-            sql = sql + ` and deptId = ${deptId}`
+        if (appletId != undefined){
+            sql = sql + ` and appletId = ${appletId}`
         }
 
         const results = await this.app.mysql.query(sql);
@@ -80,4 +75,4 @@ class AdminService extends Service {
 
 }
 
-module.exports = AdminService;
+module.exports = roleService;

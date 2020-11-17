@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 
-import { Input, Row,Col, Card,message } from 'antd'
+import { Input, Row,Col, Card,message,Button } from 'antd'
 
 import { Page,Crud } from '../../components'
 
@@ -373,21 +373,19 @@ export class DicnamePage extends Component {
   }
 
   render() {
+    const { actions } = this.props
+    const { dicnameModalChange,dicvaluesModalChange } = actions;
     return (
       <Page inner>
           <Row>
               <Col span={12} style={{paddingRight:20}}>
-                  <Card>
-                {/* <CrudFilter {...this.filterProps} /> */}
-                <CrudButtons {...this.buttonProps} />
+                <Card size="small" title="字典类型" extra={<Button type="primary" onClick={() => dicnameModalChange(true,'create')}>新增</Button>} >
                 <CrudTable {...this.listProps} />
                 <CrudForm {...this.modalProps} />
                 </Card>
               </Col>
               <Col span={12}>
-                  <Card>
-                    {/* <CrudFilter {...this.filterPropsValues} /> */}
-                    <CrudButtons {...this.buttonPropsValues} />
+                  <Card size="small" title="字典值" extra={<Button type="primary" onClick={() => dicvaluesModalChange(true,'create')}>新增</Button>} >
                     <CrudTable {...this.listPropsValues} />
                     <CrudForm {...this.modalPropsValues} />
                   </Card>

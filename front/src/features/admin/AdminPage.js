@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
-import { Input,TreeSelect,Row,Col,Tree } from 'antd'
+import * as roleActions from '../role/redux/actions';
+import { Input,TreeSelect,Row,Col,Tree,Select } from 'antd'
 import md5 from 'md5'
 import { Page,Crud } from '../../components'
 
+const Option = Select.Option;
 const {CrudTable,CrudForm,CrudFilter,CrudButtons} = Crud
 const { Search } = Input
 
@@ -19,6 +21,8 @@ export class AdminPage extends Component {
   componentDidMount(){
      const { adminPage,currentAdmin} = this.props.admin;
      const {getAllDept} = this.props.actions;
+     const {getAllRole} = this.props.roleActions;
+     getAllRole();
      getAllDept().then(data => {
       this.fetchList( adminPage);
      })
@@ -123,6 +127,14 @@ export class AdminPage extends Component {
     }
   } 
 
+  getRole = () => {
+        const {role} = this.props;
+        const {allRole} = role
+        return allRole.map(item => (
+            <Option key={item.id}>{item.roleName}</Option>
+        ))
+    }
+
   get modalProps() {
     const { admin,actions } = this.props
     const { currentAdmin, deptTree,adminModalVisible,adminPage, adminModalType,submitAdminPending } = admin
@@ -173,10 +185,20 @@ export class AdminPage extends Component {
           widget: Input,
           required: true
         },
+        {
+            key: "role",
+            label: "权限",
+            initialValue: editItem.role == undefined ? "": editItem.role.split(","),
+            widget: Select,
+            widgetProps:{
+                mode:"multiple"
+            },
+            children:this.getRole(),
+        },
       ],
       onOk: data => {
         let password = md5(data.password);
-        submitAdmin(Object.assign({},data,{password})).then(data=> {
+        submitAdmin(Object.assign({},data,{password,role: data.role.join(";")})).then(data=> {
           adminModalChange(false,"create");
           this.fetchList(adminPage);
         })
@@ -272,13 +294,15 @@ export class AdminPage extends Component {
 function mapStateToProps(state) {
   return {
     admin: state.admin,
+    role: state.role,
   };
 }
 
 /* istanbul ignore next */
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({ ...actions }, dispatch)
+    actions: bindActionCreators({ ...actions }, dispatch),
+    roleActions: bindActionCreators({ ...roleActions }, dispatch)
   };
 }
 

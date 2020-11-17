@@ -10,11 +10,13 @@ import initialState from './initialState';
 import { reducer as collapseChangeReducer } from './collapseChange';
 import { reducer as setLoadingReducer } from './setLoading';
 import { reducer as logoutReducer } from './logout';
+import { reducer as changeRoleListReducer } from './changeRoleList';
 
 const reducers = [
   collapseChangeReducer,
   setLoadingReducer,
   logoutReducer,
+  changeRoleListReducer,
 ];
 
 export default function reducer(state = initialState, action) {
@@ -22,8 +24,30 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     // Handle cross-topic actions here
     default:
-      newState = state;
-      break;
+        let menu = sessionStorage.getItem("menu");
+        let menuArray = [];
+        if (menu != undefined){
+            console.log("menu",JSON.parse(menu))
+            menuArray = JSON.parse(menu);
+        }
+        let items = [];
+        menuArray.map(item => {
+            let menu = {
+                id: `${item.id}`,
+                icon:  `${item.icon}`,
+                name: `${item.name}`,
+                route: `${item.route}`,
+            };
+            if (item.menuParentId != undefined && item.menuParentId != null){
+                menu.menuParentId = `${item.menuParentId}`;
+            }
+            if (item.breadcrumbParentId != undefined && item.breadcrumbParentId != null){
+                menu.breadcrumbParentId = `${item.breadcrumbParentId}`;
+            }
+            items.push(menu)
+        })
+        newState = Object.assign({},state,{routeList:items});
+        break;
   }
   /* istanbul ignore next */
   return reducers.reduce((s, r) => r(s, action), newState);

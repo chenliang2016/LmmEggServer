@@ -21,9 +21,12 @@ export default function reducer(state = initialState, action) {
   let newState;
   switch (action.type) {
     // Handle cross-topic actions here
+    
     default:
-      newState = state;
-      break;
+        let name = sessionStorage.getItem("name");
+        console.log("userName",name)
+        newState = Object.assign({},state,{userName:name});
+        break;
   }
   return reducers.reduce((s, r) => r(s, action), newState);
 }

@@ -46,15 +46,15 @@ module.exports = appInfo => {
     // 单数据库信息配置
     client: {
         // host
-        host: '数据库host',
+        host: 'rm-bp1hq2g7279tedkiqo.mysql.rds.aliyuncs.com',
         // 端口号
         port: '3306',
         // 用户名
-        user: 'root',
+        user: 'lmm',
         // 密码
-        password: '11111',
+        password: '9MazHFtXrPzlxPwI',
         // 数据库名
-        database: 'database',
+        database: 'lmm_frame',
       },
     // 是否加载到 app 上，默认开启
     app: true,

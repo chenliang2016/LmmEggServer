@@ -58,7 +58,7 @@ export class CommonLayout extends Component {
       notifications,
       onCollapseChange:this.onCollapseChange,
       avatar: "",
-      username: login.username,
+      username: login.userName,
       
       onSignOut() {
           actions.logout()

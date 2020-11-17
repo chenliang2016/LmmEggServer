@@ -1,0 +1,40 @@
+node { 
+	 def remote = [:]
+    remote.name = ''
+    remote.host = ''
+    remote.user = ''
+    remote.port = 22
+    remote.password = ''
+    remote.allowAnyHosts = true
+   stage('拉取代码') { 
+         checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '33928995-fa82-4429-af68-c83e8db40266', url: '']]])   }
+   // 代码编译
+   stage('代码编译') {
+        sh '''
+        
+        '''
+   }
+   stage('镜像构建') {
+sh '''
+REPOSITORY=registry.cn-hangzhou.aliyuncs.com/zlkj/bj_api:${BUILD_NUMBER}
+docker build -t $REPOSITORY .
+docker login --username= --password= registry.cn-hangzhou.aliyuncs.com
+docker push $REPOSITORY
+'''
+   }
+   stage('部署到主机'){       
+        REGISTRY_URL = "registry.cn-hangzhou.aliyuncs.com/zlkj/bj_api:${BUILD_NUMBER}";
+        docker.withRegistry(REGISTRY_URL){
+            sshCommand remote: remote, command: """  
+                cid=\$(docker ps -a| grep \"bj_api\" | awk '{print \$1}');
+				echo \$cid;
+				if [ \"\$cid\" != \"\" ]; then
+                    docker rm -f \$cid
+                fi;
+                docker rmi --force `docker images | grep \"registry.cn-hangzhou.aliyuncs.com/zlkj/bj_api\" | awk '{print \$3}'`;
+            """
+            sshCommand remote: remote, command: "docker pull $REGISTRY_URL"
+            sshCommand remote: remote, command: "docker run --name bj_api  -d -p 8028:7001 -v /mnt/data/bjpublic:/app/public -e TZ=Asia/Shanghai $REGISTRY_URL"
+        }
+    }
+}

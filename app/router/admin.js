@@ -37,5 +37,13 @@ module.exports = app => {
   router.post('/api/b/menu/add', controller.admin.menu.add);
   router.post('/api/b/menu/delete', controller.admin.menu.delete);
   
+  router.post('/api/b/role/list', controller.admin.role.list);
+  router.post('/api/b/role/update', controller.admin.role.update);
+  router.post('/api/b/role/add', controller.admin.role.add);
+  router.post('/api/b/role/delete', controller.admin.role.delete);
+  
+  router.post('/api/b/role/configRole', controller.admin.menuRole.configRole);
+  router.post('/api/b/role/getRoleMenu', controller.admin.menuRole.getRoleMenu);
+  
   
 };
