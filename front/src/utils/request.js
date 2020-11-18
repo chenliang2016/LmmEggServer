@@ -26,7 +26,7 @@ export default function request(options) {
 
   return axios(options)
     .then(response => {
-      const { success, code, data,message } = response
+      const { success, code, data } = response
 
       let result = {}
       result = data;
@@ -39,7 +39,7 @@ export default function request(options) {
         if (code == 401){
           history.replace('/login');
         }else{
-          message.error(`[${result.code}]${result.message}`)
+          message.error(`${result.msg}`)
           return Promise.reject({
             success: false,
             data:{},
@@ -49,27 +49,27 @@ export default function request(options) {
         }
       }
     })
-    .catch(error => {
-      const { response, message } = error
+    // .catch(error => {
+    //   const { response } = error
 
-      let msg
-      let statusCode
+    //   let msg
+    //   let statusCode
 
-      if (response && response instanceof Object) {
-        const { data, statusText } = response
-        statusCode = response.status
-        msg = data.message || statusText
-      } else {
-        statusCode = 600
-        msg = error.message || 'Network Error'
-      }
+    //   if (response && response instanceof Object) {
+    //     const { data, statusText } = response
+    //     statusCode = response.status
+    //     msg = data.message || statusText
+    //   } else {
+    //     statusCode = 600
+    //     msg = error.message || 'Network Error'
+    //   }
 
-      message.error(`${msg}`)
-      /* eslint-disable */
-      return Promise.reject({
-        success: false,
-        code:statusCode,
-        message: msg,
-      })
-    })
+    //   message.error(`${msg}`)
+    //   /* eslint-disable */
+    //   return Promise.reject({
+    //     success: false,
+    //     code:statusCode,
+    //     message: msg,
+    //   })
+    // })
 }

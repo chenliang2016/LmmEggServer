@@ -11,7 +11,7 @@ class BaseService extends Service {
     async returnError(msg) {
         return {
             success: false,
-            message:msg
+            msg:msg
         }
     }
 
@@ -68,6 +68,28 @@ class BaseService extends Service {
         const result = await this.app.mysql.update(tableName, data);
         const updateSuccess = result.affectedRows === 1;
         return updateSuccess;
+    }
+
+    async request(url,method,params){
+        let options = {
+            // 必须指定 method
+            method: method,
+            // 通过 contentType 告诉 HttpClient 以 JSON 格式发送
+            contentType: 'json',
+            // 明确告诉 HttpClient 以 JSON 格式处理返回的响应 body
+            dataType: 'json',
+        }
+        if (params != undefined){
+            options.data = params;
+        }
+        const result = await this.ctx.curl(url, options);
+        if (result.status == 200){
+            console.log(result.data)
+            // return result.data;
+            return this.returnSuccess(result.data);
+        }else {
+            return this.returnError("网络异常");
+        }
     }
 }
 

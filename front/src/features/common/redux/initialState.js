@@ -9,6 +9,7 @@
 const initialState = {
   collapsed:false,
   loading:false,
+  changePasswordModal:false,
   routeList : [
     //   {
     //     id: '4',
@@ -65,6 +66,8 @@ const initialState = {
     //     route: '/role/role',
     //   },
     ],
+  changePasswordPending: false,
+  changePasswordError: null,
 };
 
 export default initialState;

@@ -6,6 +6,7 @@ import {
   AdminPage,
   DeptPage,
   DicnamePage,
+  AconfigPage,
 } from './';
 
 export default {
@@ -15,5 +16,6 @@ export default {
     { path: 'default-page', name: 'Default page', component: AdminPage, isIndex: true },
     { path: 'dept', name: '部门', component: DeptPage, isIndex: true },
     { path: 'dicName', name: '字典管理', component: DicnamePage, isIndex: true },
+    { path: 'config', name: '配置管理', component: AconfigPage, isIndex: true },
   ],
 };

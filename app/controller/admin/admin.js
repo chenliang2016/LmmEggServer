@@ -87,6 +87,26 @@ class AdminController extends Controller {
             this.error('添加失败')
         }
     }
+
+    async changePassword() {
+        const {
+            ctx,
+            app
+        } = this;
+        const data = ctx.request.body;
+        let returnRs = await ctx.service.admin.admin.changePassword(data);
+        ctx.body = returnRs;
+    }
+
+    async resetPassword() {
+        const {
+            ctx,
+            app
+        } = this;
+        const data = ctx.request.body;
+        let returnRs = await ctx.service.admin.admin.resetPassword(data.id);
+        ctx.body = returnRs;
+    }
     
     
 }

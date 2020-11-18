@@ -4,13 +4,17 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import NProgress from 'nprogress'
+import md5 from 'md5'
 
 import {
   pathMatchRegexp
 } from '../../utils'
 
-import { BackTop, Layout } from 'antd'
+import { BackTop, Layout, Input, message } from 'antd'
 import { MyLayout } from '../../components'
+import { Page,Crud } from '../../components'
+
+const {CrudTable,CrudForm,CrudFilter,CrudButtons} = Crud
 
 const { Content } = Layout
 const { Sider,Header,Bread } = MyLayout
@@ -28,10 +32,61 @@ export class CommonLayout extends Component {
      collapseChange();
   }
 
+  get modalProps() {
+      const {common,actions} = this.props;
+      const {changePasswordModal} = common;
+      const {changePassword,changePasswordVisible} = actions;
+      const loginId = sessionStorage.getItem("loginId");
+    return {
+      item: {},
+      visible: changePasswordModal,
+      destroyOnClose: true,
+      maskClosable: false,
+      confirmLoading: false,
+      title: `修改密码`,
+      centered: true,
+      elements: [
+        {
+          key: "loginId",
+          label: "账户名",
+          initialValue: loginId,
+          widget: Input,
+          widgetProps:{
+            disabled:true,
+          },
+          required: true
+        },
+        {
+            key: "oldPassword",
+            label: "老密码",
+            widget: Input,
+            required: true
+          },
+          {
+            key: "newPassword",
+            label: "新密码",
+            widget: Input,
+            required: true
+          },
+      ],
+      onOk: data => {
+        changePassword(Object.assign({},data,{oldPassword:md5(data.oldPassword),
+            newPassword:md5(data.newPassword),loginId})).then(data=> {
+         message.success("修改成功")
+         changePasswordVisible(false)
+        })
+      },
+      onCancel() {
+        changePasswordVisible(false)
+      },
+    }
+  }
+
   render() {
 
     const {common,login,location,actions}  = this.props;
     const {collapsed,routeList,loading} = common
+    const {changePasswordVisible} = actions
 
     const currentPath = location.pathname + location.search
     if (currentPath !== this.previousPath) {
@@ -63,6 +118,9 @@ export class CommonLayout extends Component {
       onSignOut() {
           actions.logout()
       },
+      onChangePassword() {
+        changePasswordVisible(true)
+      },
     }
 
     const siderProps = {
@@ -93,6 +151,7 @@ export class CommonLayout extends Component {
         </div>
        </Layout>
       </Fragment>
+      <CrudForm {...this.modalProps} />
       </div>
     );
   }

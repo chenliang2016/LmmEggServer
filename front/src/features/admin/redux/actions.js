@@ -20,5 +20,10 @@ export { deleteDicvalues, dismissDeleteDicvaluesError } from './deleteDicvalues'
 export { dicvaluesModalChange } from './dicvaluesModalChange';
 export { chooseCurrentDicvalues } from './chooseCurrentDicvalues';
 export { getDicList, dismissGetDicListError } from './getDicList';
-
+export { getAconfigList, dismissGetAconfigListError } from './getAconfigList';
+export { submitAconfig, dismissSubmitAconfigError } from './submitAconfig';
+export { deleteAconfig, dismissDeleteAconfigError } from './deleteAconfig';
+export { aconfigModalChange } from './aconfigModalChange';
+export { chooseCurrentAconfig } from './chooseCurrentAconfig';
+export { resetPassword, dismissResetPasswordError } from './resetPassword';
 

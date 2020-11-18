@@ -10,6 +10,9 @@ const { SubMenu } = Menu
 export default class Header extends PureComponent {
   handleClickMenu = e => {
     e.key === 'SignOut' && this.props.onSignOut()
+    if (e.key === "changePassword"){
+        this.props.onChangePassword();
+    }
   }
   render() {
     const {
@@ -35,6 +38,9 @@ export default class Header extends PureComponent {
             </Fragment>
           }
         >
+        <Menu.Item key="changePassword">
+               修改密码
+          </Menu.Item>
           <Menu.Item key="SignOut">
                退出
           </Menu.Item>

@@ -11,12 +11,16 @@ import { reducer as collapseChangeReducer } from './collapseChange';
 import { reducer as setLoadingReducer } from './setLoading';
 import { reducer as logoutReducer } from './logout';
 import { reducer as changeRoleListReducer } from './changeRoleList';
+import { reducer as changePasswordVisibleReducer } from './changePasswordVisible';
+import { reducer as changePasswordReducer } from './changePassword';
 
 const reducers = [
   collapseChangeReducer,
   setLoadingReducer,
   logoutReducer,
   changeRoleListReducer,
+  changePasswordVisibleReducer,
+  changePasswordReducer,
 ];
 
 export default function reducer(state = initialState, action) {

@@ -6,4 +6,5 @@
 module.exports = app => {
   require('./router/generate')(app);
   require('./router/admin')(app);
+  require('./router/wx')(app);
 };

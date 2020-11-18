@@ -61,7 +61,23 @@ const initialState = {
   deleteDicvaluesError: null,
   getDicListPending: false,
   getDicListError: null,
-  dicTypes:{}
+  dicTypes:{},
+  aconfigList:[],
+  aconfigPage:1,
+  aconfigSize:10,
+  aconfigTotal:0,
+  aconfigById:{},
+  aconfigModalType:"create",
+  aconfigModalVisible:false,
+  currentAconfig:{},
+  getAconfigListPending: false,
+  getAconfigListError: null,
+  submitAconfigPending: false,
+  submitAconfigError: null,
+  deleteAconfigPending: false,
+  deleteAconfigError: null,
+  resetPasswordPending: false,
+  resetPasswordError: null,
 };
 
 export default initialState;

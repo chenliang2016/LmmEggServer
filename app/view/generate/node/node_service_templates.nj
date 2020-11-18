@@ -3,6 +3,7 @@ const Service = require('../../core/base_service');
 class {{class_name}}Service extends Service {
 
     async create(entity) {
+        entity.createAt = this.app.mysql.literals.now;
         const result = await this.app.mysql.insert('{{table}}', entity);
         const insertSuccess = result.affectedRows === 1;
         if (insertSuccess){
@@ -13,6 +14,7 @@ class {{class_name}}Service extends Service {
     }
 
     async update(entity) {
+        entity.updateAt = this.app.mysql.literals.now;
         const result = await this.app.mysql.update('{{table}}', entity);
         const updateSuccess = result.affectedRows === 1;
         if (updateSuccess){

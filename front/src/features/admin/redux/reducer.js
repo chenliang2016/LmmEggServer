@@ -21,8 +21,19 @@ import { reducer as deleteDicvaluesReducer } from './deleteDicvalues';
 import { reducer as dicvaluesModalChangeReducer } from './dicvaluesModalChange';
 import { reducer as chooseCurrentDicvaluesReducer } from './chooseCurrentDicvalues';
 import { reducer as getDicListReducer } from './getDicList';
+import { reducer as getAconfigListReducer } from './getAconfigList';
+import { reducer as submitAconfigReducer } from './submitAconfig';
+import { reducer as deleteAconfigReducer } from './deleteAconfig';
+import { reducer as aconfigModalChangeReducer } from './aconfigModalChange';
+import { reducer as chooseCurrentAconfigReducer } from './chooseCurrentAconfig';
+import { reducer as resetPasswordReducer } from './resetPassword';
 
 const reducers = [
+  getAconfigListReducer,
+  submitAconfigReducer,
+  deleteAconfigReducer,
+  aconfigModalChangeReducer,
+  chooseCurrentAconfigReducer,
   getAdminListReducer,
   submitAdminReducer,
   deleteAdminReducer,
@@ -45,6 +56,7 @@ const reducers = [
   dicvaluesModalChangeReducer,
   chooseCurrentDicvaluesReducer,
   getDicListReducer,
+  resetPasswordReducer,
 ];
 
 export default function reducer(state = initialState, action) {

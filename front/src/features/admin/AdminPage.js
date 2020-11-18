@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from './redux/actions';
 import * as roleActions from '../role/redux/actions';
-import { Input,TreeSelect,Row,Col,Tree,Select } from 'antd'
+import { Input,TreeSelect,Row,Col,Tree,Select,message } from 'antd'
 import md5 from 'md5'
 import { Page,Crud } from '../../components'
 
@@ -44,7 +44,7 @@ export class AdminPage extends Component {
   get listProps() {
     const { admin,actions } = this.props
     const { getAdminListPending,adminTotal,adminPage,allDeptById } = admin
-    const { deleteAdmin,chooseCurrentAdmin,adminModalChange } = actions;
+    const { deleteAdmin,chooseCurrentAdmin,adminModalChange,resetPassword } = actions;
 
     return {
       dataSource: this.getDataSource(),
@@ -98,20 +98,30 @@ export class AdminPage extends Component {
           key:1,
           name:'编辑',
         //   color:"#ffffff",
-          buttonProps:{
-            icon:"edit",
-            type:"primary"
-          },
+        //   buttonProps:{
+        //     icon:"edit",
+        //     type:"primary"
+        //   },
         },
         {
           key:3,
           name:'删除',
-          buttonProps:{
-            icon:"delete",
-            type:"danger"
-          },
+        //   buttonProps:{
+        //     icon:"delete",
+        //     type:"danger"
+        //   },
           needConfirm:true,
           confirmTitle:"确认删除"
+        },
+        {
+          key:2,
+          name:'重置密码',
+        //   buttonProps:{
+        //     icon:"delete",
+        //     type:"danger"
+        //   },
+          needConfirm:true,
+          confirmTitle:"确认重置"
         }
       ],
       handleMenuClick: (record,item) => {
@@ -122,6 +132,11 @@ export class AdminPage extends Component {
             deleteAdmin(record.id).then((data) => {
             this.fetchList(adminPage);
           })
+        }else if (item.key == 2){
+            resetPassword(record.id).then(data => {
+                message.success("重置密码成功")
+                this.fetchList(adminPage);
+            })
         }
       }
     }
@@ -178,13 +193,13 @@ export class AdminPage extends Component {
           widget: Input,
           required: true
         },
-        {
-          key: "password",
-          label: "密码",
-          // initialValue: editItem.password,
-          widget: Input,
-          required: true
-        },
+        // {
+        //   key: "password",
+        //   label: "密码",
+        //   // initialValue: editItem.password,
+        //   widget: Input,
+        //   required: true
+        // },
         {
             key: "role",
             label: "权限",

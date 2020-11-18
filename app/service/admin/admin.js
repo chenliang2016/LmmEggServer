@@ -1,4 +1,5 @@
 const Service = require('../../core/base_service');
+const md5 = require('md5')
 
 class AdminService extends Service {
 
@@ -37,6 +38,32 @@ class AdminService extends Service {
             params
         );
         return result;
+    }
+
+    async changePassword(params) {
+        let entity = await this.app.mysql.get('a_admin',
+        {loginId:params.loginId,password:params.oldPassword}
+        );
+        if (entity == undefined){
+            return this.returnError("用户不存在或原始密码不对");
+        }
+        entity.password = params.newPassword;
+        await this.update(entity)
+        
+        return this.returnSuccess("修改密码成功");
+    }
+
+    async resetPassword(id) {
+        let entity = await this.app.mysql.get('a_admin',
+        {id}
+        );
+        if (entity == undefined){
+            return this.returnError("用户不存在");
+        }
+        entity.password = md5('11111');
+        await this.update(entity)
+        
+        return this.returnSuccess("重置密码成功");
     }
 
     async list(page,size,username,deptId) {

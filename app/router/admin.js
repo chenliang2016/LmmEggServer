@@ -14,6 +14,8 @@ module.exports = app => {
   router.post('/api/b/admin/add', controller.admin.admin.add);
   router.post('/api/b/admin/delete', controller.admin.admin.delete);
   router.post('/api/b/admin/login', controller.admin.admin.login);
+  router.post('/api/b/admin/changePassword', controller.admin.admin.changePassword);
+  router.post('/api/b/admin/resetPassword', controller.admin.admin.resetPassword);
   
   // 字典管理
   router.post('/api/b/dicname/list', controller.admin.dicName.list);
@@ -45,5 +47,9 @@ module.exports = app => {
   router.post('/api/b/role/configRole', controller.admin.menuRole.configRole);
   router.post('/api/b/role/getRoleMenu', controller.admin.menuRole.getRoleMenu);
   
+  router.post('/api/b/aconfig/list', controller.admin.aconfig.list);
+  router.post('/api/b/aconfig/update', controller.admin.aconfig.update);
+  router.post('/api/b/aconfig/add', controller.admin.aconfig.add);
+  router.post('/api/b/aconfig/delete', controller.admin.aconfig.delete);
   
 };
