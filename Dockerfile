@@ -1,5 +1,5 @@
 #制定node镜像的版本
-FROM registry.cn-hangzhou.aliyuncs.com/aliyun-node/alinode:3.14.1
+FROM node:10.16.3
 #声明作者
 MAINTAINER ebay
 #移动当前目录下面的文件到app目录下
