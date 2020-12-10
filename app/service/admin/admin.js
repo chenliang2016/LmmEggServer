@@ -4,6 +4,7 @@ const md5 = require('md5')
 class AdminService extends Service {
 
     async create(entity) {
+        entity.password = md5("11111");
         const result = await this.app.mysql.insert('a_admin', entity);
         const insertSuccess = result.affectedRows === 1;
         if (insertSuccess){
@@ -37,6 +38,15 @@ class AdminService extends Service {
         const result = await this.app.mysql.get('a_admin',
             params
         );
+
+        if (result != undefined){
+            console.log(result);
+            const token = this.app.jwt.sign({
+                uid: result.id,
+            }, this.app.config.jwt.bsecret,{ expiresIn: 60 * 60 });
+            result.token = token;
+        }
+        
         return result;
     }
 

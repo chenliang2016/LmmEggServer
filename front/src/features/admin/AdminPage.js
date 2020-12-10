@@ -212,8 +212,7 @@ export class AdminPage extends Component {
         },
       ],
       onOk: data => {
-        let password = md5(data.password);
-        submitAdmin(Object.assign({},data,{password,role: data.role.join(";")})).then(data=> {
+        submitAdmin(Object.assign({},data,{role: data.role.join(";")})).then(data=> {
           adminModalChange(false,"create");
           this.fetchList(adminPage);
         })

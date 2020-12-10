@@ -33,6 +33,7 @@ export function login(args = {}) {
         // sessionStorage.setItem("token", data.token);
         sessionStorage.setItem("name", data.user.username);
         sessionStorage.setItem("loginId", data.user.loginId);
+        sessionStorage.setItem("token", data.user.token);
         dispatch(push("/admin"));
         dispatch(changeUserName(data.user.username))
         dispatch(changeRoleList(data.menus));

@@ -36,9 +36,15 @@ export default function request(options) {
       if (result.success) {
          return Promise.resolve(result.data)
       }else{
-        if (code == 401){
-          history.replace('/login');
-        }else{
+        if (result.code == 401){
+            history.replace('/login');
+            return Promise.reject({
+              success: false,
+              data:{},
+              code:result.code,
+              message: result.message,
+            })      
+          }else{
           message.error(`${result.msg}`)
           return Promise.reject({
             success: false,

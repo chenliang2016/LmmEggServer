@@ -35,7 +35,31 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1597806524891_7869';
 
   // add your middleware config here
-  config.middleware = [];
+  config.middleware = ['sign','authmToken','authbToken','getWxOpenId'];
+
+  config.sign = {
+      match: [
+        "/api/open/*"
+      ]
+  }
+
+  config.getWxOpenId = {
+      match:[
+          '/api/b/admin/bindwx'
+      ]
+  }
+
+  config.authmToken = {
+    match: [
+     
+    ]
+   }
+
+  config.authbToken = {
+    match: [
+      "/api/b/*",
+    ]
+  }
 
   // add your user config here
   const userConfig = {

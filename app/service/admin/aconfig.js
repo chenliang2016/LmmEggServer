@@ -1,4 +1,5 @@
 const Service = require('../../core/base_service');
+const {getConfig,addConfig,deleteConfig} = require('../../utils/store')
 
 class aconfigService extends Service {
 
@@ -15,6 +16,13 @@ class aconfigService extends Service {
 
     async update(entity) {
         entity.updateAt = this.app.mysql.literals.now;
+
+        let value = await getConfig(entity.configKey);
+        console.log(value)
+        if (value != undefined){
+            await deleteConfig(entity.configKey)
+        }
+
         const result = await this.app.mysql.update('a_config', entity);
         const updateSuccess = result.affectedRows === 1;
         if (updateSuccess){
@@ -36,9 +44,15 @@ class aconfigService extends Service {
 
     
     async getConfigByKey(configKey) {
+        let value = await getConfig(configKey);
+        console.log(value)
+        if (value != undefined){
+            return value;
+        }
         const result = await this.app.mysql.get('a_config',{configKey});
         console.log(result)
         if (result != undefined){
+            await addConfig(configKey,result.configValue)
             return result.configValue;
         }
         return result;
