@@ -1,9 +1,26 @@
 const path = require("path");
-const Controller = require("egg").Controller;
+const Controller = require('../../core/base_controller');
 const fs = require("fs");
 const mkdirp = require("mkdirp");
+const qiniu = require("qiniu")
 
 class UploaderController extends Controller {
+
+    async qiniuToken(){
+        const {ctx} = this;
+
+        var accessKey = ctx.app.config.qiniu.ak;
+        var secretKey = ctx.app.config.qiniu.sk;
+        var bucket = ctx.app.config.qiniu.bucket;
+        var mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
+        var options = {
+            scope: bucket,
+          };
+        var putPolicy = new qiniu.rs.PutPolicy(options);
+        var uploadToken=putPolicy.uploadToken(mac);
+        this.success(uploadToken);
+    }
+    
 
   async isFileExite(fileAbsoluteName) {
     return new Promise((resolve, reject) => {

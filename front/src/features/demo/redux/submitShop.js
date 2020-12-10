@@ -5,7 +5,6 @@ import {
   DEMO_SUBMIT_SHOP_DISMISS_ERROR,
 } from './constants';
 
-import '../../../mock/shop'
 import request from '../../../utils/request'
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk

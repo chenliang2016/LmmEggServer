@@ -33,7 +33,8 @@ module.exports = app => {
   router.post('/api/b/file/add', controller.admin.aFile.add);
   router.post('/api/b/file/delete', controller.admin.aFile.delete);
   router.post('/api/b/file/upload', controller.admin.upload.uploadFile);
-
+  router.post('/api/b/file/qiniuToken', controller.admin.upload.qiniuToken);
+  
   router.post('/api/b/menu/list', controller.admin.menu.list);
   router.post('/api/b/menu/update', controller.admin.menu.update);
   router.post('/api/b/menu/add', controller.admin.menu.add);
@@ -52,4 +53,15 @@ module.exports = app => {
   router.post('/api/b/aconfig/add', controller.admin.aconfig.add);
   router.post('/api/b/aconfig/delete', controller.admin.aconfig.delete);
   
+  // 信息发布
+  router.post('/api/b/infoCategory/list', controller.admin.infoCategory.list);
+  router.post('/api/b/infoCategory/update', controller.admin.infoCategory.update);
+  router.post('/api/b/infoCategory/add', controller.admin.infoCategory.add);
+  router.post('/api/b/infoCategory/delete', controller.admin.infoCategory.delete);
+
+  router.post('/api/b/info/list', controller.admin.info.list);
+  router.post('/api/b/info/update', controller.admin.info.update);
+  router.post('/api/b/info/add', controller.admin.info.add);
+  router.post('/api/b/info/detail', controller.admin.info.detail);
+  router.post('/api/b/info/delete', controller.admin.info.delete);
 };

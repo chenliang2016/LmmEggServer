@@ -64,6 +64,12 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
+    qiniu: {
+        ak:"0Wda9EfCYW6qRN-76tFnfuv42voNOaph3srJgUav",
+        sk:"RKv22xX99ncnUubXv20ifRTTNCF5sGgFNpwpfPYJ",
+        bucket:"hgc",
+        fileprex:"https://image.zhelut.com/",
+    },
   };
 
   config.mysql = {

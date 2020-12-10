@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Upload, message, Button, Icon } from 'antd';
 import * as qiniu from 'qiniu-js'
 import request from '../../utils/request'
+const prexUrl = "https://image.zhelut.com/"
 
 export default class UploadFile extends Component {
 
@@ -79,7 +80,7 @@ export default class UploadFile extends Component {
       console.log(params);
       let config = {
         useCdnDomain: true,
-        region: qiniu.region.z0
+        region: qiniu.region.z2
       };
       
       let key = this.props.key
@@ -95,6 +96,10 @@ export default class UploadFile extends Component {
 
       const that = this;
       let newFileList = this.state.fileList;
+
+      if (this.props.isSingle){
+          newFileList = [];
+      }
       
 
       request({
@@ -119,7 +124,7 @@ export default class UploadFile extends Component {
               newFileList.push({
                 uid:key,
                 name:key,
-                url:key,
+                url:prexUrl + key,
                 status:'done'
               })
               that.triggerChange(newFileList)

@@ -3,49 +3,56 @@ import React, { Component } from 'react';
 import BraftEditor from 'braft-editor'
 // 引入编辑器样式
 import 'braft-editor/dist/index.css'
-let qiniuTokenUrl = ''
-let keyUrl = ''
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-}
 
-function fileSize(str) {
-  var fileSize;
-  if (str.indexOf('=') > 0) {
-    var indexOf = str.indexOf('=');
-    str = str.substring(0, indexOf);//把末尾的’=‘号去掉
-  }
-  fileSize = parseInt(str.length - (str.length / 8) * 2);
-  return fileSize;
-}
+import * as qiniu from 'qiniu-js'
+import request from '../../utils/request'
+import { message, } from 'antd';
 
-const myUploadFn = async file => {
-
-  file.preview = await getBase64(file.file);
-  let pic = file.preview.replace(/data:image\/.*;base64,/, '')
-  let picUrl
-  var url = "http://upload-z2.qiniup.com/putb64/" + fileSize(pic);
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4) {
-      var keyText = JSON.parse(xhr.responseText);
-      picUrl = keyUrl + keyText.key;
-      file.success({ url: picUrl })
-    }
-  }
-  xhr.open("POST", url, true);
-  xhr.setRequestHeader("Content-Type", "application/octet-stream");
-  xhr.setRequestHeader("Authorization", 'UpToken ' + qiniuTokenUrl);
-  xhr.send(pic);
-}
+const prexUrl = "https://image.zhelut.com/"
 
 class LmmEdit extends React.Component {
 
+    myUploadFn = async file => {
+        let config = {
+            useCdnDomain: true,
+            region: qiniu.region.z2
+          };
+          
+          let key = file.file.name
+        
+          let putExtra = {
+            fname: key,
+            params: {},
+            mimeType: null
+          };
+        
+          request({
+              method:'post',
+              url:this.props.tokenUrl,
+            }).then(data => {
+              var observable = qiniu.upload(file.file, key, data, putExtra, config)
+              var observer = {
+                next(res){
+                  console.log("qiniu-next")
+                  console.log(res)
+                },
+                error(err){
+                  console.log("qiniu-err")
+                  console.log(err)
+                  message.error(`${file.file.name} 上传失败`);
+                }, 
+                complete(res){
+                  console.log("qiniu-complete")
+                  message.success(`${file.file.name} 上传成功`);
+        
+              
+                  file.success({ url: prexUrl + key })
+                }
+              }
+              var subscription = observable.subscribe(observer) // 上传开始
+            })
+        
+        }
 
   triggerChange = changedValue => {
     const { onChange } = this.props;
@@ -55,9 +62,7 @@ class LmmEdit extends React.Component {
   };
 
   render() {
-    const { value,style, qiniuToken, url } = this.props;
-    if (qiniuToken) qiniuTokenUrl = qiniuToken
-    if (url) keyUrl = url
+    const { value,style } = this.props;
 
     let initValue = value;
 
@@ -68,7 +73,7 @@ class LmmEdit extends React.Component {
     return (
       <div style={style}>
         <BraftEditor
-          media={{ uploadFn: myUploadFn }}
+          media={{ uploadFn: this.myUploadFn }}
           value={value}
           defaultValue={initValue}
           onChange={this.triggerChange}

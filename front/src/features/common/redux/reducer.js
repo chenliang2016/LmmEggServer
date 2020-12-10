@@ -41,6 +41,7 @@ export default function reducer(state = initialState, action) {
                 icon:  `${item.icon}`,
                 name: `${item.name}`,
                 route: `${item.route}`,
+                show: `${item.show}`,
             };
             if (item.menuParentId != undefined && item.menuParentId != null){
                 menu.menuParentId = `${item.menuParentId}`;

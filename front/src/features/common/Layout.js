@@ -99,7 +99,7 @@ export class CommonLayout extends Component {
     }
 
     const fixed = true;
-    const menus = routeList.filter(_ => _.menuParentId !== '-1').filter(_ => _.show !== false)
+    const menus = routeList.filter(_ => _.menuParentId !== '-1').filter(_ => _.show !== "0")
     const currentRoute = routeList.find(
       _ => _.route && pathMatchRegexp(_.route, location.pathname)
     )
